@@ -82,6 +82,73 @@ const page = () => {
     
     ]
 
+    let xdata = [
+        {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+       {
+           buttonCTA : "Book a Meeting",
+           img: "https://w7.pngwing.com/pngs/44/943/png-transparent-google-calendar-logo-icon.png",
+           subtitle: 'Lets meet up in this 60-minute meeting. Ill teach you everything you need to about becoming an independent creator',
+           title : "1-1 Coaching Session",
+           price: '$50.99',
+           discount : '$76.00'
+
+       },
+
+   ]
+
     const router = useRouter();
 
     const [templateOption, setTemplateOption ] = useState(0);

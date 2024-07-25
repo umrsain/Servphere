@@ -23,14 +23,14 @@ export default function AvailabilityDetailsPage() {
                 className="rounded-md border"
             />  
 
-            <div className='flex flex-col space-y-3 mt-3'>
+            <div className='flex flex-col space-y-3 mt-6'>
                 <h2 className='text-md font-semibold text-gray-600'>
-                    Time Slots
+                    Select time Slots
                 </h2>
 
                 <div className='grid grid-cols-2 gap-3'>
                     {timeSlots.map((elm, index) =>
-                        <div onClick={()=> setSlotIndex(index)} className='flex items-center text-center justify-center rounded-xl bg-sky-400/75 hover:bg-sky-300 h-6 w-28 text-[9px] text-gray-50 '>
+                        <div onClick={()=> setSlotIndex(index)} className='flex items-center text-center justify-center rounded-md hover:opacity-60 bg-gray-200/75 h-10 w-28 text-[9px] text-gray-500 '>
                             {elm}
                         </div>
                     )}
@@ -44,6 +44,9 @@ export default function AvailabilityDetailsPage() {
                         <h4 className='text-sm text-white'>Book Appointment</h4>            
                 </button>
 
+                <div className='pb-16'>
+
+                </div>
             </div>
         </div> 
     </form>

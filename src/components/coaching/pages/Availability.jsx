@@ -118,11 +118,11 @@ const Availability = () => {
                             <div className='flex flex-col space-y-4'>
                                 <label className='text-gray-500 text-xs'>Time Zone</label>
 
-                                <Select onValueChange={(val) => setData({...data, av_break_before: val})}>
+                                <Select name="av_timezone">
                                     <SelectTrigger className="w-[180px]">
                                         <SelectValue placeholder="Select a timezone" />
                                     </SelectTrigger>
-                                    <SelectContent >
+                                    <SelectContent>
                                         <SelectGroup>
                                         <SelectLabel>Timezone</SelectLabel>
                                             {ukTimeZones.map((elm) =>
@@ -136,19 +136,19 @@ const Availability = () => {
                         </div>
 
                         <div>
-                            <label className='text-gray-500 text-xs'>Duration</label>
-                            <input required name='av_duration' onChange={(e) => setData({...data, av_duration: e.target.value})} placeholder='Duration of the meeting in minutes' type='text' className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+                            <label className='text-gray-500 text-xs'>Duration In Minutes</label>
+                            <input required name='av_duration' placeholder='Duration of the meeting in minutes' type="number" className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
                         </div>
 
                         <div className='flex space-x-10'>
                             <div>
-                                <label className='text-gray-500 text-xs'>Break Before Meeting</label>
-                                <input required name='av_break_before' onChange={(e) => setData({...data, av_break_before: e.target.value})} value="10 min" type='text' className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+                                <label className='text-gray-500 text-xs'>Break Before Meeting in Minutes</label>
+                                <input required name='av_break_before' value="15" type="number" className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
                             </div>
 
                             <div>
-                                <label className='text-gray-500 text-xs'>Break After Meeting</label>
-                                <input required name='av_break_after' onChange={(e) => setData({...data, av_break_after: e.target.value})} value="10 min" type='text' className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+                                <label className='text-gray-500 text-xs'>Break After Meeting in Minutes</label>
+                                <input required name='av_break_after' value="15" type="number"  className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
                             </div>
                         </div>
                         
@@ -186,15 +186,15 @@ const Availability = () => {
                                                 <div className="flex w-28 items-start justify-center rounded-lg">
                                                     <div className="flex">
                                                         <select name={`${day}_opening_hour`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
+                                                            <option value="01">1</option>
+                                                            <option value="02">2</option>
+                                                            <option value="03">3</option>
+                                                            <option value="04">4</option>
+                                                            <option value="05">5</option>
+                                                            <option value="06">6</option>
+                                                            <option value="07">7</option>
+                                                            <option value="08">8</option>
+                                                            <option value="09">9</option>
                                                             <option value="10">10</option>
                                                             <option value="11">10</option>
                                                             <option value="12">12</option>
@@ -203,13 +203,13 @@ const Availability = () => {
                                                         <span className="text-md mr-3">:</span>
 
                                                         <select name={`${day}_opening_minute`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none mr-4">
-                                                            <option value="0">00</option>
+                                                            <option value="00">00</option>
                                                             <option value="30">30</option>
                                                         </select>
 
                                                         <select name={`${day}_opening_AM_or_PM`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none">
-                                                            <option value="am">AM</option>
-                                                            <option value="pm">PM</option>
+                                                            <option value="AM">AM</option>
+                                                            <option value="PM">PM</option>
                                                         </select>
                                                     </div>
                                                     <FaSortDown className='ml-2' style={{color:'gray'}}/>
@@ -220,15 +220,15 @@ const Availability = () => {
                                                 <div className="flex w-28 items-start justify-cente rounded-lg">
                                                     <div className="flex">
                                                         <select name={`${day}_closing_hour`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
+                                                            <option value="01">1</option>
+                                                            <option value="02">2</option>
+                                                            <option value="03">3</option>
+                                                            <option value="04">4</option>
+                                                            <option value="05">5</option>
+                                                            <option value="06">6</option>
+                                                            <option value="07">7</option>
+                                                            <option value="08">8</option>
+                                                            <option value="09">9</option>
                                                             <option value="10">10</option>
                                                             <option value="11">10</option>
                                                             <option value="12">12</option>
@@ -236,14 +236,14 @@ const Availability = () => {
 
                                                         <span className="text-md mr-3">:</span>
 
-                                                        <select ame={`${day}_closing_minute`}  className="bg-transparent text-gray-500 text-sm appearance-none outline-none mr-4">
-                                                            <option value="0">00</option>
+                                                        <select name={`${day}_closing_minute`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none mr-4">
+                                                            <option value="00">00</option>
                                                             <option value="30">30</option>
                                                         </select>
 
                                                         <select name={`${day}_closing_AM_or_PM`} className="bg-transparent text-gray-500 text-sm appearance-none outline-none">
-                                                            <option value="am">AM</option>
-                                                            <option value="pm">PM</option>
+                                                            <option value="AM">AM</option>
+                                                            <option value="PM">PM</option>
                                                         </select>
                                                     </div>
                                                     <FaSortDown className='ml-2' style={{color:'gray'}}/>

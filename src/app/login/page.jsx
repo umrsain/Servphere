@@ -1,7 +1,7 @@
 import { LoginForm } from '@/components/LoginForm';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import { auth } from '@/auth';
+import { auth, signIn } from '@/auth';
 
 
 const login = async() => {
@@ -18,7 +18,10 @@ const login = async() => {
 
             <div className=''>
                 <span>Or</span>
-                <form action="">
+                <form action={ async() => {
+                  "use server"
+                  await signIn("google")
+                }}>
                     <button type='submit'>Login with Google</button>
                 </form>
             </div>

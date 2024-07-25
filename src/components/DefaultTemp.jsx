@@ -5,7 +5,7 @@ import { FaInstagramSquare, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/f
 import CheckoutDetailsPage from './coaching/CheckoutDetailsPage'
 import { IoArrowBackSharp } from "react-icons/io5";
 import AvailabilityDetailsPage from './coaching/AvailabilityDetailsPage'
-
+ 
 export const DefaultTemp = ({sdata, themeColor}) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -68,7 +68,7 @@ export const DefaultTemp = ({sdata, themeColor}) => {
     {/* CHECKOUT PAGE RENDERED DYNAMICALLY*/}
 
     <div id="checkout" className='h-full w-full hidden'>
-        <div className='h-full w-full space-y-20'>
+        <div className='h-full w-full pb-6 space-y-20'>
 
             <div className='flex ml-3 mt-3 w-full space-x-14'>
                 <IoArrowBackSharp onClick={() => 
