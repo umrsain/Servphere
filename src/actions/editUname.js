@@ -3,6 +3,7 @@
 import { auth } from '@/auth';
 import { Store } from "../../models/storeModel";
 import { connectDB } from "../utils/connect";
+import { revalidatePath } from 'next/cache';
 
 export async function editUname(formData) {
     const session = await auth();
@@ -23,5 +24,7 @@ export async function editUname(formData) {
         
         
      });
+
+     revalidatePath('/mystore')
 
 }

@@ -18,8 +18,16 @@ export async function AddProfilePhoto(formData) {
  
      await Store.updateOne({ownerEmail: email},{
         $set : {        
-                img: profileImg
+          img: profileImg
         }
      });
+
+     await User.updateOne({email: email},{
+        $set : {        
+          onBoardingStep: 1
+        }
+     });
+
+     revalidatePath('/mystore')
 
 }

@@ -16,7 +16,7 @@ const login = async() => {
         <div className='w-2/6 h-full'>
             <LoginForm/>
 
-            <div className=''>
+            <div className='text-black'>
                 <span>Or</span>
                 <form action={ async() => {
                   "use server"

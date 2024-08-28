@@ -1,57 +1,44 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaInstagramSquare, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/fa'
 import CheckoutDetailsPage from './coaching/CheckoutDetailsPage'
 import { IoArrowBackSharp } from "react-icons/io5";
 import AvailabilityDetailsPage from './coaching/AvailabilityDetailsPage'
  
-export const DefaultTemp = ({sdata, themeColor}) => {
+export const DefaultTemp = ({themeColor, profileImg, username, servicesData}) => {
+
+    
 
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const servicesData = sdata[0].services;
+
+
 
     let serviceIndexToComponentMapping = {
         
     }
     console.log(servicesData)
 
-    for (let i=0;i<servicesData.length;i++){
+    for (let i=0;i<servicesData?.length;i++){
         serviceIndexToComponentMapping[i] = <CheckoutDetailsPage 
             img = {servicesData[i].checkout.img}
             desc_title = {servicesData[i].checkout.title}
             price = {servicesData[i].checkout.price}
             body = {servicesData[i].checkout.body}
             buttonCTA = {servicesData[i].checkout.buttonCTA}
-            themeColor = {sdata[0].themeColor}
+            themeColor = {themeColor}
 
         />
     }   
 
     console.log(serviceIndexToComponentMapping)
 
- /*
-    const getStoreDetails = async () => {
-        const res = await fetch("/api/storedetails");
-        const storeDetails = await res.json();
-        return storeDetails;
-    }
-
-    useEffect(() => {
-        getStoreDetails().then((data) => {
-            setStoreData(data);
-        })
-    },[]);
-
-    console.log(storeData);
-
-    */
-
- 
-
 
   return (
+    <>
+
+
     <div className="flex flex-col sticky top-20 overflow-y-scroll items-center bg-[#f8f8f8] border-8 border-gray-800 rounded-[40px] w-[55%] h-[85%] mt-12">
     
 
@@ -103,13 +90,13 @@ export const DefaultTemp = ({sdata, themeColor}) => {
     <div id="thumbnail" className='flex flex-col items-center'>
 
         {/* PROFILE IMAGE */}
-        <div style={{backgroundImage: `url(${sdata[0].img})`}} className="flex bg-cover min-h-24 min-w-24 mt-8 rounded-full">
+        <div style={{backgroundImage: `url(${profileImg})`}} className="flex bg-cover min-h-24 min-w-24 mt-8 rounded-full">
             
         </div>
         
         {/* USERNAME */}
         <h1 className='text-gray-600 block font-bold text-xl mt-3'>
-            {sdata[0].username}
+            {username}
         </h1>
 
         {/* EXISTING SOCIALS */}
@@ -200,5 +187,8 @@ export const DefaultTemp = ({sdata, themeColor}) => {
         </div>
     </div>      
 </div>
+    
+
+    </>
   )
 }

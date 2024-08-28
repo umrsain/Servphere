@@ -12,16 +12,13 @@ import {
 import { toast } from 'sonner';
 import { AddProfilePhoto } from '@/actions/AddProfilePhoto';
 import { UploadDropzone } from '@uploadthing/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveIndex, updateCardStatusToDone } from '@/redux/slices/HomeStepperSlice';
+import { colors } from '@/utils/colors';
 
 
 
+export default function ProfileDialogMenu({stepNumber}) {
 
-export default function ProfileDialogMenu() {
 
-  const activeIndex = useSelector((store) => store.HomeStepper.activeIndex);
-  const dispatch = useDispatch();
 
   const [profileImg, setProfileImg] = useState('');
 
@@ -29,7 +26,7 @@ export default function ProfileDialogMenu() {
     <Dialog>
 
       <DialogTrigger asChild>
-        <button className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline'>
+        <button className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline`}>
           <h4 className='block text-sm font-bold text-white'>
               + Add Profile Picture
           </h4>
@@ -53,11 +50,6 @@ export default function ProfileDialogMenu() {
                 id: toastID
               });
 
-              dispatch(updateCardStatusToDone(activeIndex));
-
-              if (activeIndex < 2) dispatch(setActiveIndex(activeIndex + 1));
-
-
             } catch(error){
               toast.error(String(error), {
                 id: toastID
@@ -68,7 +60,8 @@ export default function ProfileDialogMenu() {
           }}>
           <div className="">
             
-              <UploadDropzone    
+              <UploadDropzone
+                    
                   endpoint={"imageUploader"}
                   onClientUploadComplete={(res) => {
                   // Do something with the response
@@ -86,7 +79,7 @@ export default function ProfileDialogMenu() {
               
             <DialogFooter>
 
-              <button type='submit' className='mt-3 bg-teal-500/75 text-sm text-white hover:bg-teal-300/75 py-2 px-12 rounded focus:outline-none focus:shadow-outline'>
+              <button type='submit' className={`mt-3 bg-[${colors.airbnb_red}] text-sm text-white hover:opacity-60 active:opacity-60 py-2 px-12 rounded focus:outline-none focus:shadow-outline`}>
                 Save changes
               </button>
 

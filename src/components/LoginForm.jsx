@@ -1,5 +1,6 @@
 "use client"
 import { loginHandler } from '@/actions/loginHandler';
+import { colors } from '@/utils/colors';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -37,7 +38,7 @@ export const LoginForm = () => {
             }
         
         }} 
-        className="bg-white h-full shadow-md rounded px-8 pt-12 pb-8 mb-4 space-y-5">
+        className="bg-white h-full rounded px-8 space-y-5">
 
         <h1 className='text-gray-600 text-center text-2xl font-bold mb-2'>
             Login
@@ -56,12 +57,12 @@ export const LoginForm = () => {
         </div>
        
         <div className="flex items-center justify-between">
-            <button className="w-full hover:bg-sky-300 bg-[#6b76d8] text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className={`w-full bg-[${colors.airbnb_red}] text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline" type="submit`}>
             Sign In
             </button>
         </div>
 
-        <h3 className='text-gray-600 text-xs'>Dont have an account? <Link className='' href="/register">Register here</Link></h3>
+        <h3 className='text-gray-600 text-xs'>Don&apos;t have an account? <Link className='text-violet-900/70 underline' href="/register">Register here</Link></h3>
 
     </form>
     )

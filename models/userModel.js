@@ -29,7 +29,13 @@ const userSchema = mongoose.Schema({
     },
     username : {
         type: String
-    }
+    },
+    onBoardingCompleted: {
+        type: Boolean
+    },
+    onBoardingStep: {
+        type: Number
+    },
 
     
 },

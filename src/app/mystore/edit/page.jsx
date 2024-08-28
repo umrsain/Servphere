@@ -277,7 +277,7 @@ const page = () => {
 
 
 
-                                <button type='submit' className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline'>
+                                <button type='submit' className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline`}>
                                     <h4 className='block text-sm font-bold text-white'>
                                         Save Changes
                                     </h4>

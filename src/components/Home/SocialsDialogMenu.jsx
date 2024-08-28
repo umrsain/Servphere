@@ -14,19 +14,15 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { FaTiktok } from "react-icons/fa6";
 import { toast } from 'sonner';
 import { AddSocials } from '@/actions/AddSocials';
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveIndex, updateCardStatusToDone } from '@/redux/slices/HomeStepperSlice';
 
 
 export default function SocialsDialogMenu() {
-  const activeIndex = useSelector((store) => store.HomeStepper.activeIndex);
-  const dispatch = useDispatch();
-  
+
   return (
     <Dialog>
 
       <DialogTrigger asChild>
-        <button className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline'>
+        <button className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline`}>
           <h4 className='block text-sm font-bold text-white'>
               + Add Social Links
           </h4>
@@ -45,15 +41,10 @@ export default function SocialsDialogMenu() {
             const toastID = toast.loading("Adding Socials");
 
             try {
-              await AddSocials(formData);
+              //await AddSocials(formData);
               toast.success("Changes Successful", {
                 id: toastID
                });
-
-               dispatch(updateCardStatusToDone(activeIndex));
-
-               if (activeIndex < 2) dispatch(setActiveIndex(activeIndex + 1));
- 
             } catch(error){
               toast.error(String(error), {
                 id: toastID
@@ -98,7 +89,7 @@ export default function SocialsDialogMenu() {
                     
             <DialogFooter>
 
-              <button type='submit' className='bg-teal-500/75 text-sm text-white hover:bg-teal-300/75 py-2 px-12 rounded focus:outline-none focus:shadow-outline'>
+              <button type='submit' className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60text-sm text-white py-2 px-12 rounded focus:outline-none focus:shadow-outline`}>
                 Save changes
               </button>
 

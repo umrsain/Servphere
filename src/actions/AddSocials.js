@@ -4,6 +4,7 @@ import { auth } from '@/auth';
 import { User } from "../../models/userModel";
 import { Store } from "../../models/storeModel";
 import { connectDB } from "../utils/connect";
+import { revalidatePath } from 'next/cache';
 
 export async function AddSocials(formData) {
     const session = await auth();
@@ -35,4 +36,14 @@ export async function AddSocials(formData) {
         }
      });
 
+     await User.updateOne({email: email},{
+        $set : {        
+          onBoardingStep: 2
+        }
+     });
+
+     revalidatePath('/mystore')
+
+
 }
+ 

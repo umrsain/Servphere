@@ -30,7 +30,9 @@ export async function signUpAction(formData){
         username : username,
         email : email,
         phone : phone,
-        password : hashedPassword
+        password : hashedPassword,
+        onBoardingCompleted : false,
+        onBoardingStep: 0
     })
 
     await Store.create({
@@ -40,8 +42,8 @@ export async function signUpAction(formData){
 
     })
 
-    redirect('/login');
+    redirect('/onboarding');
 
 
 
-}
+} 

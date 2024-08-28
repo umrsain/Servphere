@@ -8,13 +8,12 @@ import { useSelector } from 'react-redux';
 
 import SocialsDialogMenu from '@/components/Home/SocialsDialogMenu';
 import ProfileDialogMenu from '@/components/Home/ProfileDialogMenu';
+import { colors } from '@/utils/colors';
 
 const home = () => {
 
   const activeIndex = useSelector((store) => store.HomeStepper.activeIndex);
   const cardStatus = useSelector((store) => store.HomeStepper.done);
-
-
   
   const CardsInfo = [
     {
@@ -35,7 +34,7 @@ const home = () => {
       desc: 'Add a Digital Product, Service or a Booking session all in one place',
       CTA: <Link href="/mystore/addproduct">
 
-      <button className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline'>
+      <button className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline`}>
           <h4 className='block text-sm font-bold text-white'>
               + Add Product
           </h4>
@@ -84,13 +83,13 @@ const home = () => {
                     { (cardStatus[index]) ?  
                       <div className='flex h-10 w-10 items-center justify-center'>
 
-                      <IoIosCheckmarkCircle className='h-full w-full' color='teal'/>
+                      <IoIosCheckmarkCircle className='h-full w-full' color={colors.airbnb_red}/>
                       </div>
                     :
                     
                     (index == activeIndex) ?
                       // CONDITIONALLY RENDER STEP BASED ON ACTIVE CARD INDEX
-                      <div className='min-h-9 min-w-9 rounded-full border-2 border-teal-300 items-center justify-center flex'>
+                      <div className={`min-h-9 min-w-9 rounded-full border-2 border-[#${colors.airbnb_light_red}] items-center justify-center flex`}>
                         <p className='text-gray-400/50 text-xs font-regular'>{index}</p>
                       </div>
                       :

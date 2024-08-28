@@ -13,6 +13,6 @@ export async function connectDB(){
 
         console.log(`Connecting to database: ${connection.host}`)
     } catch (error){
-        throw new Error("Error while connecting to DB...")
+        console.log(error.message);
     }
 }

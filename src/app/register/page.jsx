@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signUpAction } from '@/actions/signUpAction';
 import { toast } from 'sonner';
+import { colors } from '@/utils/colors';
 
 const register = () => {
   const [nameError, setNameError] = useState("");
@@ -135,7 +136,7 @@ const register = () => {
                
 
                 <div className="flex items-center justify-between">
-                    <button className="w-full hover:bg-sky-300 bg-[#6b76d8] text-white font-bold py-2 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <button className={`w-full hover:opacity-60 active:opacity-60 bg-[${colors.airbnb_red}] text-white font-bold py-2 rounded focus:outline-none focus:shadow-outlin`} type="submit">
                     Start Your 14 Days Free Trial
                     </button>
                 </div>

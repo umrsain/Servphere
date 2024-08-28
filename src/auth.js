@@ -1,9 +1,10 @@
-import NextAuth, { CredentialsSignin } from 'next-auth';
+import NextAuth, { AuthError, CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare } from 'bcryptjs';
 import { User } from '../models/userModel';
 import { connectDB } from './utils/connect';
+import { redirect } from 'next/navigation';
  
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -55,4 +56,42 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
   },
+  callbacks : {
+    signIn : async ({user, account }) => {
+      if (account?.provider === "google") {
+        try {
+
+          console.log(user);
+          const {email, name, image, id} = user
+
+          await connectDB();
+
+          const alreadyUser = await User.findOne({email});
+
+          console.log(alreadyUser);
+
+          if (!alreadyUser){
+
+            await User.create({
+              name : name,
+              email : email,
+              phone: "0",
+              password : "0",
+              onBoardingCompleted : false,
+              onBoardingStep: 0,
+              googleId : id
+            });
+          }
+
+          return true;
+        } catch (error){
+            throw new AuthError("Error while creating user")
+        }
+      }
+
+      if (account?.provider === "credentials") return true;
+
+      return false;
+    }
+  }
 });
