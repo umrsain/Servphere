@@ -11,6 +11,8 @@ export async function GET(){
 
     console.log(email)
 
+
+    
     await connectDB();
 
     try{
@@ -19,7 +21,12 @@ export async function GET(){
 
         
         return NextResponse.json(profileImg);
+
     } catch(err){
         return NextResponse.json({error: err.message})
     }
+
+    
+    return NextResponse.json("Hello")
+    
 } 

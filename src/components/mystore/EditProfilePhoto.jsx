@@ -12,7 +12,7 @@ import {
   } from "@/components/ui/dialog";
 import { toast } from 'sonner';
 import { UploadDropzone } from '@/utils/uploadthing' 
-import { ChangeProfilePhoto } from '@/actions/ChangeProfilePhoto';
+import { ChangeProfilePhoto } from '@/actions/mystore/ChangeProfilePhoto';
 import { colors } from '@/utils/colors';
 
 export default function EditProfilePhoto({image}) {

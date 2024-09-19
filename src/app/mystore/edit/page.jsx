@@ -14,6 +14,7 @@ import { FaInstagramSquare, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/f
 import { toast } from 'sonner'
 import { editFirstLevel } from '@/actions/editFirstLevel'
 import { useRouter } from 'next/navigation'
+import { colors } from '@/utils/colors'
 
 //import bg2 from '@/assets/images/S-bg.png'
 
@@ -155,7 +156,7 @@ const page = () => {
     const [storeData, setStoreData] = useState({});
     const [themeColor, setThemeColor] = useState('#000000');
     
-    storeData[0]?.themeColor
+    //storeData[0]?.themeColor
     
     
     const getStoreDetails = async () => {
@@ -173,8 +174,13 @@ const page = () => {
     },[]);
 
     const options = {
-        0 : <DefaultTemp sdata={storeData} themeColor={themeColor}/>,
-        1 : <DefaultTemp6 sdata={storeData} themeColor={themeColor}/>
+        0 : <DefaultTemp 
+                themeColor={themeColor}
+                profileImg={storeData[0]?.img} 
+                username={storeData[0]?.username} 
+                servicesData= {storeData[0]?.services} 
+            />,
+        //1 : <DefaultTemp6 sdata={storeData} themeColor={themeColor}/>
 
 
     }

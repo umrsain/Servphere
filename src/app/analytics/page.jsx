@@ -5,10 +5,14 @@ import  {analytics}  from '@/utils/analytics';
 import React from 'react'
 
 export default async function page() {
+
+  // VIEW DATA FOR THE PAST X NUMBER OF DAYS
   const TRACKING_DAYS = 7;
 
+  // RETREIVE DB RECORDS FOR THE PAST X NUMBER OF DAYS
   const pageviews = await analytics.retrieveDays("page-view",TRACKING_DAYS);
 
+  // ITERATE THROUGH EACH RECORD AND KEEP TRACK OF TOTAL PAGE VIEWS
   const totalPageViews = pageviews.reduce((acc, curr) => {
     return (
       acc + curr.events.reduce((acc,curr) => {
@@ -17,8 +21,10 @@ export default async function page() {
     )
   }, 0);
 
+  // AVG VISITORS PER DAY
   const avgVisitorsPerDay = (totalPageViews / TRACKING_DAYS).toFixed(1);
 
+  // AVG VISITORS TODAY
   const amtVisitorsToday = pageviews.filter((ev) => ev.date === getDate()).reduce((acc, curr) => {
     return (
       acc + curr.events.reduce((acc,curr) => {

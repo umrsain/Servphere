@@ -1,5 +1,7 @@
 import React from 'react'
 import { FaGoogle } from "react-icons/fa";
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 import {
     Dialog,
@@ -8,10 +10,8 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog";
   import { colors } from '@/utils/colors';
-import { toast } from 'sonner';
 import { LoginForm } from '../LoginForm';
 import { signIn } from '@/auth';
-import { redirect } from 'next/navigation';
 
 
 export default function LoginPopover() {
@@ -28,30 +28,22 @@ export default function LoginPopover() {
 
     <DialogContent className="sm:max-w-[425px]">
         
-       
-
           <LoginForm/>
 
-          <div className='flex flex-col h-full items-center justify-center mx-8'>
-
-                  <div className='flex items-center w-full my-1'>
-                    <hr className='w-1/2 border border-gray-200'/>
-                    <p className='text-xs text-gray-400'>or</p>
-                    <hr className='w-1/2 border border-gray-200'/>
-
-                  </div>
+          <div className='flex flex-col h-full items-center justify-center space-y-3 '>
 
                   <form action={ async() => {
-                    "use server"
-                    await signIn("google",{callbackUrl: "http://localhost:3000/onboarding"});
-                  }} className='h-full w-full hover:opacity-60 active:opacity-60'>
-                      <div className='flex items-center w-full justify-center border border-gray-400/75 space-x-4 rounded-md py-1.5'>
-                        <FaGoogle size={15}/>
-                        <button className='text-md' type='submit'>
-                          Continue with Google
-                        </button>
-                      </div>
-                  </form>
+                  "use server"
+                  await signIn("google");
+                }} className='h-full w-full hover:opacity-60 active:opacity-60'>
+                    <Button variant="outline" className="w-full">
+                      <FaGoogle size={15} className='mr-2'/>
+                      Login with Google
+                    </Button>
+                </form>
+
+                <h3 className='text-gray-600 text-xs'>Don&apos;t have an account? <Link className='text-purple-950/55 inline-block text-xs underline' href="/register">Register here</Link></h3>
+
           </div>
         
        

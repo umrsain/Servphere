@@ -143,8 +143,8 @@ const Checkout = () => {
 
                 <div className='flex flex-row w-full space-x-3 justify-end'>
 
-                    <button className={`bg-white border border-[${colors.airbnb_red}] hover:border-red-200 hover:bg-gray-50/25 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
-                        <h4 className='text-sm text-teal-300 hover:text-red-400'>Save as Draft </h4>
+                    <button className={`bg-white border border-gray-200 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
+                        <h4 className='text-sm hover:opacity-60 text-gray-400'>Save as Draft </h4>
                     </button>
 
                     <button type='submit' className={`bg-[${colors.airbnb_red}] active:opacity-60 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>

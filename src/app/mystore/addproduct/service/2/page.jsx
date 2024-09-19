@@ -4,16 +4,14 @@ import Checkout from '@/components/digital/pages/Checkout';
 import Thumbnail from '@/components/digital/pages/Thumbnail';
 import Link from 'next/link';
 import React, { useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurSelectedPageIndex, updateFormData } from '@/redux/slices/digitalSlice';
  
 
-
 const page = () => {
   
   const dispatch = useDispatch()
-  const pageOptions = ['Thumbnail', 'Checkout Page', 'Options' ];
+  const pageOptions = ['Thumbnail'];
   const curSelectedPageIndex = useSelector((store) => store.digital.curSelectedPageIndex);
 
   return (
@@ -34,7 +32,7 @@ const page = () => {
                     <>
                     {curSelectedPageIndex === index ? 
 
-                     <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 border-sky-300/50 text-sky-400 rounded-2xl px-4 py-1'>
+                     <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 border-red-200 text-red-300 rounded-2xl px-4 py-1'>
                         <Link href=''>
                             <h4 className='block text-sm font-semibold'>
                                 {option}
@@ -42,7 +40,7 @@ const page = () => {
                         </Link>
                     </div>         
                     :
-                    <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 hover:border-sky-300/50 hover:text-sky-400 text-sky-800/65 rounded-2xl px-4 py-1'>
+                    <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className={`border-2 hover:border-red-200 hover:text-red-300 text-gray-400 rounded-2xl px-4 py-1`}>
                         <Link href=''>
                             <h4 className='block text-sm font-semibold'>
                                 {option}
@@ -56,17 +54,9 @@ const page = () => {
                 )}
 
             </div>
-            
-
-            
+                        
                 { curSelectedPageIndex == 0 && <Thumbnail/>}
 
-                { curSelectedPageIndex == 1 && <Checkout/>}
-
-
- 
-         
-        
 
         </div>
 

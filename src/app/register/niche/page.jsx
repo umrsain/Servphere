@@ -14,12 +14,10 @@ import { MdPeopleOutline } from "react-icons/md";
 import { FaBrain } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
 import { colors } from '@/utils/colors';
+import { AddNiches } from '@/actions/onboarding/AddNiches';
+import Link from 'next/link';
 
-
-export default function niche() {
-
-    
-  const [niches, setNiches] = useState([
+const niches = [
     {
         title: "Wellness",
         icon : TbPlant2 ,
@@ -85,12 +83,28 @@ export default function niche() {
         icon : FaQuestion,
         selected: false
     }, 
-  ])
+  ]
+
+export default function niche() {
+
+    const [selectedNiches, setSelectedNiches] = useState([]);
+
+    console.log(selectedNiches)
+
+    const toggleNiche = (nicheTitle) => {
+        setSelectedNiches((prev) =>
+          prev.includes(nicheTitle)
+            ? prev.filter((n) => n !== nicheTitle)
+            : [...prev, nicheTitle]
+        )
+      }
 
   return (
-    <div className='flex items-center justify-center w-full h-screen'>
-
-        <div className='flex flex-col h-full w-2/5 shadow-lg items-center space-y-10'>
+        <form action={
+            async(formData) => {
+                await AddNiches(JSON.stringify(niches.filter((elm)=> elm.selected === true)))
+            }
+        } className='flex flex-col h-full w-2/5 shadow-lg items-center space-y-10'>
             <h2 className='text-3xl text-center text-gray-700 font-semibold mt-20'>
                 Which <span className={`text-[${colors.airbnb_red}]`}>Niche </span>
                 {' '} Suits <br/> You The Most?
@@ -99,17 +113,12 @@ export default function niche() {
             <div className='grid grid-cols-3 gap-4 w-3/4'>
                 {
                     niches.map((elm,index) => 
-                        <div onClick={() =>
-                            setNiches(prevArray =>{
-                                const newArray = [...prevArray]
-                                newArray[index] = {...newArray[index],selected:!newArray[index].selected}
-                                return newArray
-                            })
-                        } key={index} className={`flex flex-row hover:opacity-70 space-x-3 ${(elm.selected) ? `bg-[${colors.airbnb_red}]` : "bg-zinc-100 "} w-32 h-8 justify-center items-center rounded-lg`}>
+                        <div onClick={() => toggleNiche(elm.title)}
+                         key={index} className={`flex flex-row hover:opacity-70 space-x-3 ${(selectedNiches.includes(elm.title)) ? `bg-[${colors.airbnb_red}]` : "bg-zinc-100 "} w-32 h-8 justify-center items-center rounded-lg`}>
                             
-                            <elm.icon color={ elm.selected ? colors.white : colors.darkIcon}/>
+                            <elm.icon color={ (selectedNiches.includes(elm.title))? colors.white : colors.darkIcon}/>
 
-                            <h3 className={`text-sm font-semibold ${(elm.selected) ? `text-gray-100` : "text-gray-700"}`}>
+                            <h3 className={`text-sm font-semibold ${(selectedNiches.includes(elm.title)) ? `text-gray-100` : "text-gray-700"}`}>
                                 {elm.title}
                             </h3>
 
@@ -123,13 +132,12 @@ export default function niche() {
                     <h4 className='text-sm text-gray-50'>Next</h4>
                 </button>
 
-                <h4 className='text-sm text-center text-gray-400 hover:opacity-60 active:opacity-60'>Skip this step</h4>
+                <Link href={'/register/feedback'}>
+                    <h4 className='text-sm text-center text-gray-400 hover:opacity-60 active:opacity-60'>Skip this step</h4>
+                </Link>
             </div>
 
 
-        </div>
-
-    </div>
-
+        </form>
   )
 }

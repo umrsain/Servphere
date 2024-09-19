@@ -1,8 +1,36 @@
 import { analytics } from "@/utils/analytics";
+import NextAuth from 'next-auth';
+import { auth } from '@/auth';
+import { decode } from "@auth/core/jwt";
 
 
 export default async function middleware(req){
     console.log("TRACKING");
+
+    const { nextUrl } = req;
+    
+    /*
+    const authCookie = req.cookies.get("authjs.session-token");
+
+    console.log(nextUrl.pathname)
+
+
+    if (authCookie) 
+        console.log("logged in")
+
+    if (!authCookie && nextUrl.pathname!== "/") {
+        console.log("Xnot logged in")
+        return Response.redirect(new URL('/', nextUrl));
+    }
+   
+
+     console.log(
+        await decode({
+            token: authCookie?.value,
+            salt : authCookie?.name,
+            secret : process.env.AUTH_SECRET
+        })
+    )
     
     try{
         analytics.track("page-view",{
@@ -13,10 +41,11 @@ export default async function middleware(req){
         // RUN SILENTLY
         console.log(error)
     }
+
+    */
     
 
 }
 
 export const config = {
-    matcher : ['/store/:path*']
-}
+	matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],}

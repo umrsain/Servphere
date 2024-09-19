@@ -4,7 +4,7 @@ import { auth } from '@/auth';
 import { User } from "../../models/userModel";
 import { connectDB } from "../utils/connect";
 import { Store } from "../../models/storeModel";
-
+import mongoose from 'mongoose';
 
 
 
@@ -25,17 +25,8 @@ export async function submitCoachingData(formData) {
     const tb_subtitle = formData.get('tb_subtitle');
     const tb_buttonCTA = formData.get('tb_buttonCTA');
     const tb_price = formData.get('tb_price');
+    const tb_discount = formData.get('tb_discount');
 
-
-    // CHECKOUT PAGE DATA
-    const ch_image = formData.get('ch_image');
-    const ch_desc_title = formData.get('ch_desc_title');
-    const ch_body = formData.get('ch_body');
-    const ch_button = formData.get('ch_button');
-    const ch_price = formData.get('ch_price');
-    const ch_discount = formData.get('ch_discount');
-    const ch_email = formData.get('ch_email');
-    const ch_name = formData.get('ch_name');
 
 
     // AVAILABILITY PAGE DATA
@@ -43,6 +34,7 @@ export async function submitCoachingData(formData) {
     const av_duration = parseInt(formData.get('av_duration'));
     const av_break_before = parseInt(formData.get('av_break_before'));
     const av_break_after = parseInt(formData.get('av_break_after'));
+    const av_max_attendees = parseInt(formData.get('av_max_attendees'));
 
     const Sunday_opening_hour = formData.get('Sunday_opening_hour');
     const Sunday_opening_minute = formData.get('Sunday_opening_minute');
@@ -101,6 +93,7 @@ export async function submitCoachingData(formData) {
     await Store.updateOne({ownerEmail: email},{
         $push: {
         services : {
+                _id: new mongoose.Types.ObjectId(),
                 label : "coaching",
                 thumbnail: {
                     style: tb_style,
@@ -108,28 +101,17 @@ export async function submitCoachingData(formData) {
                     title: tb_title,
                     subtitle: tb_subtitle,
                     buttonCTA: tb_buttonCTA ,
-                    price : tb_price
+                    price : tb_price,
+                    discount : tb_discount
                     
                 },
 
-                checkout: {
-                    img: ch_image,
-                    title: ch_desc_title,
-                    body: ch_body,
-                    buttonCTA: ch_button,
-                    price: ch_price,
-                    discount : ch_discount,
-                    collectInfo : {
-                        name: ch_name,
-                        email : ch_email,
-                    
-                    }
-                },
                 availability: {
                     timezone : av_timezone,
                     duration: av_duration,
                     breakBefore : av_break_before,
                     breakAfter: av_break_after,
+                    max_attendees : av_max_attendees,
                     timings:[
                           { day: 'Sunday',
                             opening_hour : Sunday_opening_hour,

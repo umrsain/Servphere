@@ -6,7 +6,10 @@ import Preview from '../thumbnailPreviewCards/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurSelectedPageIndex, updateFormData } from '@/redux/slices/digitalSlice';
 import { UploadDropzone } from '@/utils/uploadthing';
-  
+import { submitDigitalData } from '@/actions/submitDigitalData';
+import { toast } from 'sonner';
+import { colors } from '@/utils/colors';
+
 const Thumbnail = () => {
 
     const curSelectedPageIndex = useSelector((store) => store.digital.curSelectedPageIndex);
@@ -20,19 +23,15 @@ const Thumbnail = () => {
         tb_subtitle : '',
         tb_button : '',
         tb_price : '',
+        tb_discount : '',
+        tb_product : '',
+
+
     }) 
 
-    const styleOptions = ['Button', 'Callout', 'Preview'];
     const [myStyle, setMyStyle] = useState('Button');
 
     const dispatch = useDispatch()
-  
-    const styleToComponentMapping = {
-        'Button' : <Button img={data.tb_image || formData.tb_image} buttonCTA={data.tb_button || formData.tb_button} price={data.tb_price || formData.tb_price}/>,
-        'Callout' : <Callout img={data.tb_image || formData.tb_image} title={data.tb_title || formData.tb_title} subtitle={data.tb_subtitle || formData.tb_subtitle} price={data.tb_price || formData.tb_price} buttonCTA={data.tb_button || formData.tb_button}/>,
-        'Preview' : <Preview img={data.tb_image || formData.tb_image} title={data.tb_title || formData.tb_title} subtitle={data.tb_subtitle || formData.tb_subtitle} price={data.tb_price || formData.tb_price} buttonCTA={data.tb_button || formData.tb_button}/>
-    }
-
 
     async function action(formData) {
         var object = {};
@@ -45,51 +44,34 @@ const Thumbnail = () => {
 
 
   return (
-    <div className='flex h-full w-full'>
+    <div className='flex h-full space-x-10 w-full'>
  
         <div className='w-2/4 h-full'>
 
-        <form action={action} className='ml-6 space-y-5'>
+        <form action={async (formData) => {
+
+            const toastID = toast.loading("Creating Service");
+
+            try{
+                // SUBMIT MULTI STEP FORM DATA
+                await submitDigitalData(formData);
+
+                toast.success("Service Successfully Created", {
+                    id: toastID
+                });
+
+            }catch(error){
+                toast.error("Failed to Create Service", {
+                    id: toastID
+                });
+
+            }
+
+
+        }} className='ml-6 space-y-5'>
                         
 
         <div className='w-full h-full space-y-10'>
-
-            <div className='flex flex-col space-y-4'>
-                <div className='flex flex-row space-x-3'>
-                    <div className='flex items-center justify-center h-6 w-6 rounded-full bg-gray-200/75'>
-                        <p className='text-xs text-gray-400'>1</p>
-                    </div>
-                    <h3 className='text-gray-500 font-medium'>Pick a style</h3>
-                </div>
-
-                <div className='flex flex-row space-x-4 w-full'>
-                    {styleOptions.map((e) =>
-                        <>
-                        { myStyle === e ?
-                        <div onClick={() =>setMyStyle(e)} key={e} className='flex items-center justify-center p-3 h-[5rem] w-[5rem] border border-gray-200/50 bg-gray-200/50 rounded-lg'>
-                            <h3 className='text-xs text-gray-500 text-center'>
-                                {e}
-                            </h3>
-                        </div>
-
-                        :
-
-                        <div onClick={() =>setMyStyle(e)} key={e} className='flex items-center justify-center p-3 border h-[5rem] w-[5rem] border-gray-200/50 hover:bg-gray-200/25 rounded-lg'>
-                            <h3 className='text-xs text-gray-500 text-center'>
-                                {e}
-                            </h3>
-                        </div>
-
-                    
-                        }
-                    
-
-                        </>
-                    
-                    )}
-                </div>
-            </div>
-
 
             <div className='flex flex-col space-y-6'>
                 <div className='flex flex-row space-x-3'>
@@ -137,17 +119,50 @@ const Thumbnail = () => {
                     <input defaultValue={formData.tb_price} onChange={(e) => setData({...data, tb_price: e.target.value})} required name='tb_price' placeholder='price' className='text-gray-500 text-sm focus:outline-none w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75' />
                 </div>
 
-                <input type='hidden' name='tb-style' value={myStyle}/>
+                <div>
+                    <label className='text-gray-500 text-xs'>Discount Price</label>
+                    <input defaultValue={formData.tb_discount} onChange={(e) => setData({...data, tb_discount: e.target.value})} name='tb_discount' placeholder='Discount' type='text' className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+                </div>
+
+                <div className='space-y-6'>
+                    
+                    <div className='flex flex-row space-x-3'>
+                        <div className='flex items-center justify-center h-6 w-6 rounded-full bg-gray-100/75'>
+                            <p className='text-xs text-gray-400'>4</p>
+                        </div>
+                        <h3 className='text-gray-500 font-medium'>Upload Your Digital Product</h3>
+                    </div>
+
+                    <div className='w-full space-y-3'>
+                        <label className='text-gray-500 text-xs'>Fields</label>
+                        
+                        <UploadDropzone    
+                            endpoint={"imageUploader"}
+                            onClientUploadComplete={(res) => {
+                            // Do something with the response
+                            console.log("Files: ", res[0].url);
+                            setData({...data, tb_product : res[0].url})
+                            alert("Upload Completed");
+                            }}
+                            onUploadError={(error) => {
+                            // Do something with the error.
+                            alert(`ERROR! ${error.message}`);
+                            }}
+                        />
+                        <input name="tb_product" value={data.tb_product} type='hidden'/>
+
+                    </div>
+
+                </div>
 
                 <div className='flex flex-row w-full space-x-3 justify-end'>
 
-                    <button className='bg-white border border-teal-300 hover:border-teal-200 hover:bg-gray-50/25 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline'>
-                        <h4 className='text-sm text-teal-300 hover:text-teal-400'>Save as Draft </h4>
+                    <button className={`bg-white border border-gray-200 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
+                        <h4 className='text-sm hover:opacity-60 text-gray-400'>Save as Draft </h4>
                     </button>
 
-                    <button type='submit' className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline'>
-                    <h4 className='text-sm text-white'>Next</h4>
-                        
+                    <button type='submit' className={`bg-[${colors.airbnb_red}] active:opacity-60 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
+                        <h4 className='text-sm text-white'>Next</h4>   
                     </button>
 
                 </div>
@@ -161,8 +176,27 @@ const Thumbnail = () => {
 
     </form>
         </div>
+ 
+        <div className='flex sticky top-20 justify-between shadow-md h-[8rem] w-[30rem] rounded-lg p-3'>
 
-            {styleToComponentMapping[myStyle]}
+            <div className='w-[65%]'>
+            <h4 className='text-md text-gray-600 font-semibold'>
+                {data.tb_title || formData.tb_title}
+            </h4>
+
+            <h5 className='text-sm text-gray-400'>
+                {data.tb_subtitle || formData.tb_subtitle}
+            </h5>
+            </div>
+
+            <div className='flex space-x-2'>
+            <h4 className='text-sm text-gray-600'>{'$'}{data?.tb_price || formData?.tb_price}</h4>
+
+            <button className={`bg-[${colors.airbnb_red}] h-5 ${(data.tb_button || formData.tb_button ) ? "px-2" : "px-0"} text-sm text-white font-medium rounded-md`}>
+                {data.tb_button || formData.tb_button}
+            </button>
+            </div>
+        </div>
     </div>
   )
 }

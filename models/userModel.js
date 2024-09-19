@@ -13,7 +13,6 @@ const userSchema = mongoose.Schema({
     },
     phone: {
         type: String,
-        required : true,
     },
     password: {
         type: String,
@@ -36,7 +35,33 @@ const userSchema = mongoose.Schema({
     onBoardingStep: {
         type: Number
     },
-
+    niches : {
+        type: Array,
+        default : []
+    },
+    feedback: {
+        option: {
+            type: String
+        },
+        comment: {
+            type: String
+        },
+        default: {}
+    },
+    priceId : {
+        type: String,
+        default: ""
+    },
+    hasProSubscription : {
+        type : Boolean,
+        default : false
+    },
+    customerId: {
+        type: String,
+        validate(value) {
+          return value.includes("cus_");
+        },
+      },
     
 },
 {

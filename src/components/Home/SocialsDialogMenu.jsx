@@ -14,6 +14,7 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { FaTiktok } from "react-icons/fa6";
 import { toast } from 'sonner';
 import { AddSocials } from '@/actions/AddSocials';
+import { colors } from '@/utils/colors';
 
 
 export default function SocialsDialogMenu() {

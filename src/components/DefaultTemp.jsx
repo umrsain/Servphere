@@ -1,194 +1,105 @@
 "use client"
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { FaInstagramSquare, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/fa'
-import CheckoutDetailsPage from './coaching/CheckoutDetailsPage'
-import { IoArrowBackSharp } from "react-icons/io5";
-import AvailabilityDetailsPage from './coaching/AvailabilityDetailsPage'
- 
-export const DefaultTemp = ({themeColor, profileImg, username, servicesData}) => {
 
-    
+import { colors } from '@/utils/colors'
+import { Link, MapPin } from 'lucide-react';
+ 
+export const DefaultTemp = ({themeColor, profileImg, username, bio, link, location, servicesData}) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
-
-
-
 
     let serviceIndexToComponentMapping = {
         
     }
-    console.log(servicesData)
 
-    for (let i=0;i<servicesData?.length;i++){
-        serviceIndexToComponentMapping[i] = <CheckoutDetailsPage 
-            img = {servicesData[i].checkout.img}
-            desc_title = {servicesData[i].checkout.title}
-            price = {servicesData[i].checkout.price}
-            body = {servicesData[i].checkout.body}
-            buttonCTA = {servicesData[i].checkout.buttonCTA}
-            themeColor = {themeColor}
-
-        />
-    }   
-
-    console.log(serviceIndexToComponentMapping)
-
-
-  return (
-    <>
-
-
-    <div className="flex flex-col sticky top-20 overflow-y-scroll items-center bg-[#f8f8f8] border-8 border-gray-800 rounded-[40px] w-[55%] h-[85%] mt-12">
     
-
-    {/* TOP NOTCH UPPER MOBIILE LINE */}
-    <div className='flex sticky top-0 bg-gray-800 w-36 min-h-5 rounded-b-xl items-center justify-center space-x-3'>
-        <hr className='border-2 rounded-md border-gray-700 w-12'/>
-        
-        <div className='h-2 w-2 bg-blue-900 rounded-full'>
-        </div>
-    </div>
+  return (
 
 
 
-    {/* CHECKOUT PAGE RENDERED DYNAMICALLY*/}
+<div className="sticky top-20 mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 dark:bg-gray-800 border-[14px] rounded-[2.5rem] h-[700px] w-[350px]">
+    <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
+    <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
+    <div className="h-[46px] w-[3px] bg-gray-300 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
+    <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+    <div className="rounded-[2rem] overflow-hidden w-[322px] h-[672px] bg-white dark:bg-gray-800">
 
-    <div id="checkout" className='h-full w-full hidden'>
-        <div className='h-full w-full pb-6 space-y-20'>
-
-            <div className='flex ml-3 mt-3 w-full space-x-14'>
-                <IoArrowBackSharp onClick={() => 
-                            {
-                                let a = document.getElementById('checkout');
-                                let b = document.getElementById('thumbnail');
-
-                                a.style.display= "none";
-                                b.style.display= "flex";
-
-                                
-                            }}
-                    size={25}
-                    className=''/>
-
-                <h1 className='text-lg text-gray-600 text-center font-semibold'>Checkout</h1>
-
-            </div>
-
-            {serviceIndexToComponentMapping[activeIndex]}
-
-            { (servicesData[activeIndex].label === "coaching") ?
-                <AvailabilityDetailsPage/>
-                : null    
-        }
-        </div>
-    </div>
-
-
-    {/* THUMBNAIL PAGE RENDERED DYNAMICALLY*/}
-
-    <div id="thumbnail" className='flex flex-col items-center'>
-
-        {/* PROFILE IMAGE */}
-        <div style={{backgroundImage: `url(${profileImg})`}} className="flex bg-cover min-h-24 min-w-24 mt-8 rounded-full">
-            
-        </div>
-        
-        {/* USERNAME */}
-        <h1 className='text-gray-600 block font-bold text-xl mt-3'>
-            {username}
-        </h1>
-
-        {/* EXISTING SOCIALS */}
-        <div className='flex mt-2 space-x-3'>
-            
-        </div>
-            
-        {/* CARDS LIST CONTAINER */}
-        <div className='flex flex-col h-full w-full space-y-1 p-3'>
-
-            {servicesData.map((elm, index) => 
-
-            
-            <div onClick={() => setActiveIndex(index)} className='bg-white rounded-lg shadow-inner'>
-
-                <div className='flex flex-col space-y-2 m-3'>
+             {/* TOP NOTCH UPPER MOBIILE LINE */}
+          <div className='w-full flex justify-center'>
+            <div className='flex sticky top-0 bg-gray-800 w-36 min-h-5 rounded-b-xl items-center justify-center space-x-3'>
+                <hr className='border-2 rounded-md border-gray-700 w-12'/>
                 
-                    <div className='flex w-full h-full space-x-3'>
-
-                        
-                        <div className='min-h-8 min-w-8'>
-                        {
-                                
-                            <Image
-                                src={elm.thumbnail.img}
-                                height={100}
-                                width={100}
-                                className='rounded-sm min-h-9 min-w-9 max-w-9 max-h-9'
-                                alt="logo"
-                            /> 
-                        }
-                        </div>
-                        
-
-                        <div className='flex flex-col space-y-1.5'>
-                            <h3 className='text-sm text-gray-500 font-medium'>
-                                {elm.thumbnail.title}
-                            </h3>
-
-                            { (index === activeIndex ) ? 
-                            <h4 className='text-xs text-gray-400'>
-                                {elm.thumbnail.subtitle}
-                            </h4> : 
-
-                            <h4 className='text-xs line-clamp-2 text-gray-400'>
-                                {elm.thumbnail.subtitle}
-                            </h4> 
-                            }
-                    
-
-                            {/* CONDITIONAL RENDER BASED ON DISCOUNT */}
-                            {
-                                (index === activeIndex) ? (
-                                (elm.checkout.discount) ?
-
-                                <div style={{color: themeColor}} className='flex flex-row items-center space-x-1.5'>
-                                    <span className='font-semibold'>{elm.checkout.discount}</span>
-                                    <span className='text-decoration-line: line-through opacity-50 text-sm font-semibold'>{elm.checkout.price}</span>
-                                </div>
-                                :
-                                <div style={{color: themeColor}} className='flex flex-row items-center space-x-1.5'>
-                                    <span className='font-semibold'>{elm.checkout.price}</span>
-                                </div> ) : null
-                            }
-
-                        </div>
-                    </div>
-
-                    { (index === activeIndex) ? 
-                    <button style={{backgroundColor: themeColor}} onClick={() => 
-                    {
-                        let a = document.getElementById('checkout');
-                        let b = document.getElementById('thumbnail');
-
-                        b.style.display= "none";
-                        a.style.display= "flex";
-       
-                    }
-                    
-                    } className='py-2 w-full rounded focus:outline-none focus:shadow-outline'>
-                        <h4 className='text-sm text-white'>{elm.thumbnail.buttonCTA}</h4>  
-                    </button> : null
-                    }
-
+                <div className='h-2 w-2 bg-blue-900 rounded-full'>
                 </div>
             </div>
-            )}   
-        </div>
-    </div>      
-</div>
+          </div>
+
+    {/* THUMBNAIL PAGE RENDERED DYNAMICALLY*/}
+    <div className='w-full mt-3 z-10'>
+            <div style={{backgroundImage: `url(${profileImg})`}} className='flex ml-3 bg-cover h-20 w-20 rounded-full'>
+            </div>
+
+            <div className='flex flex-col mt-3 mx-3'>
+              <h3 className='text-gray-500 text-[10px] font-medium'>{username}</h3>
+              <h3 className='text-gray-500 text-[9px]'>{bio}</h3>
+
+              <div className='flex justify-between w-full mt-3'>
+
+                <div className='flex text-gray-400 text-[8px] space-x-1'>
+                  <Link size={12} color={colors.lightGrey}/>
+                  <h6 className=''>{location}</h6>
+                </div>
+
+                <div className='flex space-x-1'>
+                  <MapPin size={12} color={colors.lightGrey}/>
+                  <h6 className='text-sky-700/75 text-[8px]'>{link}</h6>
+                </div>
+
+              </div>
+
+            </div>
+
+            <hr className='mt-2'/>
+
+            <div className='flex flex-col w-full space-y-2'>
+
+              {servicesData.map((elm,index) =>
+                <div className='flex justify-between shadow-sm p-3'>
+
+                  <div className='w-[65%]'>
+                    <h4 className='text-[11px] text-gray-600 font-semibold'>
+                      {elm.thumbnail.title}
+                    </h4>
+
+                    <h5 className='text-[8px] text-gray-400'>
+                      {elm.thumbnail.subtitle}
+                    </h5>
+                  </div>
+
+                  <div className='flex space-x-2'>
+                    <h4 className='text-[10px] text-gray-600'>{elm.thumbnail.price}</h4>
+
+                    <button className={`bg-[${colors.airbnb_red}] h-5 px-2 text-[10px] text-white font-medium rounded-md`}>
+                      Book
+                    </button>
+                  </div>
+                </div>
+              
+              )}
+            </div>
+
+          </div>
+
+        
+    </div>
+
+    </div>
     
 
-    </>
+
+    
+
+    
   )
 }

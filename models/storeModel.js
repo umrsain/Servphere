@@ -4,6 +4,8 @@ const storeSchema = mongoose.Schema({
     ownerEmail : { type: String },
     img: { type: String, default:'' },
     bio: { type: String, default:'' },
+    link: { type: String, default:'' },
+    location: { type: String, default:'' },
     username: { type: String, default:'' },
     themeColor: { type: String, default:'' },
     socialLinks : {

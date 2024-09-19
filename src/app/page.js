@@ -13,17 +13,36 @@ import {
 import LoginPopover from '@/components/login/LoginPopover';
 import SignupPopover from '@/components/register/SignupPopover';
 import { redirect } from 'next/navigation';
+import { connectDB } from '@/utils/connect';
+import { Store } from '../../models/storeModel';
+import { User } from '../../models/userModel';
+
+import  p3  from "../../public/images/p3.jpg";
+import  p6  from "../../public/images/p6.jpg";
+import  p5  from "../../public/images/p5.jpg";
+import  p1  from "../../public/images/p1.jpg";
+
+
   
 
 export default async function Home() {
 
-  //console.log(res.oceanProducts[0].transportSchedules);
-
-  const session = await auth();
-  if (session?.user) redirect('/onboarding');
-
-  //console.log(session)
+    const session = await auth();
+    const email = session?.user?.email;
   
+    if (session?.user) {
+        await connectDB();
+        let onBoardingCompleted = await User.find({email: email},{_id:0,
+            onBoardingCompleted: 1});
+
+        if (onBoardingCompleted[0]?.onBoardingCompleted) redirect("/mystore")
+        else redirect("/onboarding")
+
+        //redirect("/mystore");
+
+    }
+
+
   const heroCardsInfo = [
     {
         title: "Elevate Your Business Fast",
@@ -59,9 +78,9 @@ export default async function Home() {
   ]
   
   return (
-    <div className='flex flex-col w-full h-full bg-zinc-100/30 pt-10 px-32 pb-12'>
+    <div className='flex flex-col w-full h-full bg-zinc-100/30 pt-10 pb-12'>
 
-        <div className='flex'>
+        <div className='flex px-12'>
 
             <div className='flex items-center justify-items-center'>
             
@@ -82,7 +101,7 @@ export default async function Home() {
 
         </div>
 
-        <div className='flex w-full h-full space-x-16'>
+        <div className='flex px-32 w-full h-full space-x-16'>
             <div className='w-3/4 h-full space-y-12 mt-16'>
                 <h1 className='block text-gray-600 text-8xl font-bold'>
                 Meet Your <span className=''> All-In-One </span>Store Builder
@@ -129,7 +148,7 @@ export default async function Home() {
 
         </div>
 
-        <div className='flex space-x-4 w-full justify-center mt-24'>
+        <div className='flex space-x-4 px-24 w-full justify-center mt-24'>
             {heroCardsInfo.map((elm,index) => 
                 <div key={index} className='w-1/3 space-y-4 shadow-xl p-4 rounded-xl'>
                     <h2 className='text-md font-medium text-gray-600'>{elm.title}</h2>
@@ -138,9 +157,9 @@ export default async function Home() {
             )}
         </div>
 
-        <div className='flex w-full h-full space-x-16 mt-24'>
+        <div className='flex w-full h-full px-24 space-x-16 mt-24'>
 
-            <div className='w-1/2 space-y-4'>
+            <div className='w-4/6 space-y-4'>
                 <h2 className='text-md font-semibold text-gray-600'>
                     You could have a beautiful, portal in the next 10 minutes.
                 </h2>
@@ -188,39 +207,72 @@ export default async function Home() {
 
             </div>
 
-            <div className='bg-rose-200 rounded-2xl w-1/2'>
-
-            </div>
-        </div>
-
-        <div className='flex w-full h-full space-x-16 mt-24'>
-
-            <div className='w-1/2 space-y-4 mt-5'> 
-
-                <h2 className='text-3xl font-semibold text-gray-600'>
-                    Your Questions, <br></br> answered
-                </h2>   
-            </div>
-
-            <div className='w-1/2 space-y-4'>
-
-                <Accordion type="single" collapsible>
-                    {
-                        faqs.map((elm,index) =>
-
-                        <AccordionItem key={index} value={`item-${index}`}>
-                            <AccordionTrigger>{elm.question}</AccordionTrigger>
-                            <AccordionContent>
-                                {elm.answer}
-                            </AccordionContent>
-                        </AccordionItem>
-                        )
-                    }
-                </Accordion>   
-
-            </div>
+            <Image className='bg-cover rounded-2xl w-2/6 h-auto brightness-75'
+                src = {p5}
+                alt='img'
+            />
 
         </div>
+
+        <div className='flex flex-col items-center w-full h-full bg-gray-200 mt-24'>
+            <div className='flex px-24 rounded-xl w-full h-full space-x-16'>
+
+                <div className='w-1/2 space-y-4 mt-5'> 
+
+                    <h2 className='text-3xl font-semibold text-gray-600'>
+                        Your Questions, <br></br> answered
+                    </h2>   
+                </div>
+
+                <div className='w-1/2 space-y-4'>
+
+                    <Accordion type="single" collapsible>
+                        {
+                            faqs.map((elm,index) =>
+
+                            <AccordionItem key={index} value={`item-${index}`}>
+                                <AccordionTrigger>{elm.question}</AccordionTrigger>
+                                <AccordionContent>
+                                    {elm.answer}
+                                </AccordionContent>
+                            </AccordionItem>
+                            )
+                        }
+                    </Accordion>   
+
+                </div>
+
+            </div>
+
+            <div className='flex bg-white rounded-xl w-[85%] h-[14rem] space-x-16 mt-10'>
+               
+                <Image className='w-1/2 h-full bg-cover rounded-md brightness-75'
+                    src = {p3}
+                    alt='img'
+                />
+               
+                <div className='flex flex-col w-1/2 h-full space-y-6 mt-10'>
+                    <h2 className='text-3xl font-semibold text-gray-600'>
+                        Still have Questions?
+                    </h2>
+
+                    <p className='text-md text-gray-400'>
+                        Get answers from use straight away.
+                    </p>
+
+                    <button className='border rounded-lg border-gray-500 w-1/2 text-md text-gray-500'>
+                        Message Us
+                    </button>
+
+                </div>
+            </div>
+
+            <div className='w-full h-24'>
+
+            </div>
+
+        </div>
+
 
         
     </div>

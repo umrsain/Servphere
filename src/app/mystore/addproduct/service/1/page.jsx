@@ -9,13 +9,14 @@ import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurSelectedPageIndex, updateFormData } from '@/redux/slices/thumbnailSlice';
+import { colors } from '@/utils/colors';
  
 
 
 const page = () => {
   
   const dispatch = useDispatch()
-  const pageOptions = ['Thumbnail', 'Checkout', 'Availability', 'Options' ];
+  const pageOptions = ['Thumbnail', 'Availability' ];
   const curSelectedPageIndex = useSelector((store) => store.thumbnail.curSelectedPageIndex);
 
   return (
@@ -24,7 +25,7 @@ const page = () => {
     <Navbar/>
                  
     <div className='w-full h-full bg-white mt-5 mb-20'>
-        <h2 className='ml-6 mb-2 mt-5 block text-sky-900/65 text-2xl font-semibold'>
+        <h2 className={`ml-6 mb-2 mt-5 block text-sky-900/65 text-2xl font-semibold`}>
         <span className='text-gray-300'>My store /</span> Add Product</h2>
         
         <hr className='w-full'/>
@@ -36,7 +37,7 @@ const page = () => {
                     <>
                     {curSelectedPageIndex === index ? 
 
-                     <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 hover:border-teal-300/50 hover:text-teal-400 border-teal-300/50 text-teal-400 rounded-2xl px-4 py-1'>
+                     <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 border-red-200 text-red-300 rounded-2xl px-4 py-1'>
                         <Link href=''>
                             <h4 className='block text-sm font-semibold'>
                                 {option}
@@ -44,7 +45,7 @@ const page = () => {
                         </Link>
                     </div>         
                     :
-                    <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 hover:border-teal-300/50 hover:text-teal-400 text-sky-800/65 rounded-2xl px-4 py-1'>
+                    <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className={`border-2 hover:border-red-200 hover:text-red-300 text-gray-400 rounded-2xl px-4 py-1`}>
                         <Link href=''>
                             <h4 className='block text-sm font-semibold'>
                                 {option}
@@ -63,9 +64,7 @@ const page = () => {
             
                 { curSelectedPageIndex == 0 && <Thumbnail/>}
 
-                { curSelectedPageIndex == 1 && <Checkout/>}
-
-                { curSelectedPageIndex == 2 && <Availability/>}
+                { curSelectedPageIndex == 1 && <Availability/>}
 
 
          

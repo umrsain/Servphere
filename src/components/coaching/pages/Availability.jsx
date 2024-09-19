@@ -61,17 +61,8 @@ const Availability = () => {
      const tb_subtitle = formData.tb_subtitle || undefined;
      const tb_buttonCTA = formData.tb_button || undefined;
      const tb_price = formData.tb_price || undefined;
+     const tb_discount = formData.tb_discount || undefined;
 
-      // CHECKOUT PAGE ATTRIBUTES
-
-      const ch_image = formData.ch_image || undefined;
-      const ch_desc_title = formData.ch_desc_title || undefined;
-      const ch_body = formData.ch_body || undefined;
-      const ch_button = formData.ch_button || undefined;
-      const ch_price = formData.ch_price || undefined;
-      const ch_discount = formData.ch_discount || undefined;
-      const ch_email = formData.ch_email || undefined;
-      const ch_name = formData.ch_name || undefined;
 
     return (
     <div className='flex w-full h-full'>
@@ -82,7 +73,7 @@ const Availability = () => {
             {/* SUBMIT ALL INPUT DATA FROM MULTI STEP FORM TO SERVER ACTION*/}
             <form action={async (formData) => {
 
-                const toastID = toast.loading("Creating Account");
+                const toastID = toast.loading("Creating Service");
 
                 try{
                     // SUBMIT MULTI STEP FORM DATA
@@ -139,6 +130,11 @@ const Availability = () => {
                         <div>
                             <label className='text-gray-500 text-xs'>Duration In Minutes</label>
                             <input required name='av_duration' placeholder='Duration of the meeting in minutes' type="number" className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+                        </div>
+
+                        <div>
+                            <label className='text-gray-500 text-xs'>Maximum number of participants for one meeting</label>
+                            <input required name='av_max_attendees' placeholder='Maximum attendees' type="number" className='focus:outline-none text-sm text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
                         </div>
 
                         <div className='flex space-x-10'>
@@ -264,8 +260,8 @@ const Availability = () => {
 
                     <div className='flex flex-row w-full space-x-3 justify-end'>
                         
-                        <button className={`bg-white border border-[${colors.airbnb_red}] hover:border-red-200 hover:bg-gray-50/25 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
-                            <h4 className='text-sm text-teal-300 hover:text-red-400'>Save as Draft </h4>
+                        <button className={`bg-white border border-gray-200 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
+                            <h4 className='text-sm hover:opacity-60 text-gray-400'>Save as Draft </h4>
                         </button>
 
                         <button type='submit' className={`bg-[${colors.airbnb_red}] active:opacity-60 hover:opacity-60 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline`}>
@@ -290,15 +286,8 @@ const Availability = () => {
                 <input type="hidden" name="tb_subtitle" value={tb_subtitle} />
                 <input type="hidden" name="tb_buttonCTA" value={tb_buttonCTA} />
                 <input type="hidden" name="tb_price" value={tb_price} />
+                <input type="hidden" name="tb_discount" value={tb_discount} />
 
-                <input type="hidden" name="ch_image" value={ch_image} />
-                <input type="hidden" name="ch_desc_title" value={ch_desc_title} />
-                <input type="hidden" name="ch_body" value={ch_body} />
-                <input type="hidden" name="ch_button" value={ch_button} />
-                <input type="hidden" name="ch_price" value={ch_price}/>
-                <input type="hidden" name="ch_discount" value={ch_discount} />
-                <input type="hidden" name="ch_email" value={ch_email}/>
-                <input type="hidden" name="ch_name" value={ch_name} />
             </div>
 
                 </div>

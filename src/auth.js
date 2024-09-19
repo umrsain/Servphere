@@ -5,6 +5,7 @@ import { compare } from 'bcryptjs';
 import { User } from '../models/userModel';
 import { connectDB } from './utils/connect';
 import { redirect } from 'next/navigation';
+import { Store } from '../models/storeModel';
  
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -81,6 +82,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               onBoardingStep: 0,
               googleId : id
             });
+
+            await Store.create({
+              ownerEmail: email,
+              socialLinks: {}
+      
+          })
           }
 
           return true;

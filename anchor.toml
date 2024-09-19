@@ -1,0 +1,10 @@
+[lcl-host]
+realm-apid = 'localhost'
+
+[org]
+apid = 'aeroartz'
+
+[service]
+apid = 'servphere'
+category = 'javascript'
+cert-style = 'acme'

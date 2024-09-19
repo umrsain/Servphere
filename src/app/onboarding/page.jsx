@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { colors } from '@/utils/colors';
+import WizardSurvey from '@/components/Home/WizardSurvey';
 
 export default async function page() {
 
@@ -15,12 +16,10 @@ export default async function page() {
     const session = await auth();
     const email = session.user?.email;
 
-
-
     // CREATE DB CONNECTION AND FETCH USER DATA
     await connectDB();
 
-    console.log(email);
+    //console.log(email);
 
     let userData;
 
@@ -30,13 +29,13 @@ export default async function page() {
         console.log(err)
     }
 
-    console.log(userData);
+    //console.log(userData);
 
     // DATA STRUCTURE TO STORE ALL CARDS INFORMATION
     const CardsInfo = [
         {
-          title: 'Add Your Profile Picture',
-          desc: 'Personalize your store by adding your picture',
+          title: 'Add Your Profile Details',
+          desc: 'Personalize your store by adding a profile photo, username and a bio etc.',
           CTA : <ProfileDialogMenu stepNumber={userData?.onBoardingStep}/>,
           done : false
         }, 
@@ -48,13 +47,19 @@ export default async function page() {
     
         },
         {
-          title: 'Create Your First Product',
-          desc: 'Add a Digital Product, Service or a Booking session all in one place',
-          CTA: <Link href="/mystore/addproduct">
+            title : 'Help Us Personalize your experience',
+            desc : 'Fill out a small optional survey to help us deliver a personalized experience',
+            CTA : <WizardSurvey/>,
+            done : false
+        },
+        {
+          title: 'Setup Your Direct Deposit',
+          desc: 'Servphere uses Stripe to transfer directly to your bank account.',
+          CTA: <Link href="/payment">
     
-          <button className='bg-teal-500/75 hover:bg-teal-300/75 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline'>
+          <button className={`bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 py-2 w-2/5 rounded focus:outline-none focus:shadow-outline`}>
               <h4 className='block text-sm font-bold text-white'>
-                  + Add Product
+                  + Setup Payment
               </h4>
           </button>
         </Link>,
@@ -149,10 +154,6 @@ export default async function page() {
 
             )}
         </div>
-
-        
-        
-        
 
         </div>
     </div>

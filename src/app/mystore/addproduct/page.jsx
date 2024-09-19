@@ -9,6 +9,7 @@ const page = () => {
 
     const pathname = usePathname();
 
+    // ARRAY TO STORE PRODUCTS/SERVICES OFFERED
     const ProductItems = [
         {
             id: 1,
@@ -42,37 +43,34 @@ const page = () => {
 
                     <div className='p-7 w-3/4'>
                         { ProductItems.map((elm) =>
-                        <div key={elm.id} className='flex flex-row p-3 border-0 mb-2 rounded-xl shadow-md space-x-3'>
-                            
-                            <Link href={`${pathname}/service/${elm.id}`}>
-                                <div className='bg-gray-300 hover:bg-gray-200 w-14 h-14 rounded-lg'>
-                                    <Image
-                                        className='rounded-lg hover:opacity-95'
-                                        src={elm.img}
-                                        height={100}
-                                        width={100}
-                                        alt="logo"
-                                    />
+                        <Link key={elm.id} href={`${pathname}/service/${elm.id}`}>
+
+                            <div className='flex flex-row hover:opacity-60 active:opacity-60 p-3 border-0 mb-2 rounded-xl shadow-md space-x-3'>
+                                
+                                    <div className='bg-gray-300 w-14 h-14 rounded-lg'>
+                                        <Image
+                                            className='rounded-lg'
+                                            src={elm.img}
+                                            height={100}
+                                            width={100}
+                                            alt="logo"
+                                        />
+                                    </div>
+
+                                <div className=''>
+
+                                        <h3 className='block mb-2 text-sky-900/75 text-xl font-semibold'>
+                                            {elm.name}
+                                        </h3>
+                                        <h4 className='block mb-2 text-gray-500/75 text-xs font-semibold'>
+                                            {elm.desc}
+                                        </h4>
+
                                 </div>
-                            </Link>
 
-                            <div className=''>
+                            </div>   
 
-                                <Link href={`${pathname}/service/${elm.id}`}>
-                                    <h3 className='block mb-2 text-sky-900/75 hover:text-sky-600/50 text-xl font-semibold'>
-                                        {elm.name}
-                                    </h3>
-                                </Link>
-
-                                <Link href={`${pathname}/service/${elm.id}`}>
-                                    <h4 className='block mb-2 text-gray-500/75 hover:text-gray-400/75 text-xs font-semibold'>
-                                        {elm.desc}
-                                    </h4>
-                                </Link>
-
-                            </div>
-
-                        </div>   
+                        </Link>
                     )}
                     </div>
                     

@@ -1,41 +1,60 @@
 'use server'
-
+  
 import { auth } from '@/auth';
 import { User } from "../../models/userModel";
 import { Store } from "../../models/storeModel";
-
 import { connectDB } from "../utils/connect";
 
-export async function createBooking(formData) {
+export async function createBooking(data) {
     const session = await auth();
     const email = session.user?.email;
-    const client_id = formData.get("client_id");
-    const service_id = formData.get("service_id");
-
-    const client_email = formData.get("client_emaol");
-    const status = formData.get("status");
-    const is_paid = formData.get("is_paid");
 
 
-
-
-    console.log(profileImg)
-
-     // CONNECT DB
-     await connectDB();
+    
+    // Check if the slot is available based on ServiceID, startime and date
+    const existingBooking = await Booking.find({
+      services: {
+        $elemMatch: {
+          serviceID: data.id,
+          bookings: {
+            $elemMatch: {
+              startTime: data.data.start,
+              endTime: data.data.start,
+              date: data.date
+            }
+          }
+        }
+      }
+    });
  
-     await Store.updateOne({ownerEmail: email},{
-        $set : {        
-          img: profileImg
-        }
-     });
+    if (existingBooking) console.log("YES IT HIT")
 
-     await User.updateOne({email: email},{
-        $set : {        
-          onBoardingStep: 1
-        }
-     });
+    console.log(existingBooking)
 
-     revalidatePath('/mystore')
+  
+
+    /*
+
+    // PASS ID , DATA WHICH IS DATE AND START TIME , DATE WHICH IS  DATE.TOSTRING()
+    await Store.updateOne(
+      { 
+        "services.id": data.serviceId
+      },
+      { 
+        "$push": { 
+          "services.$.bookings": {
+            "startTime": data.data.start,
+            "endTime": data.data.end,
+            "date": data.date
+          }
+        }
+      }
+    )
+
+    */
+  
+
+ 
+
 
 }

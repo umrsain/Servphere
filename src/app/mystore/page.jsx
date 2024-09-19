@@ -1,12 +1,12 @@
-import { auth } from '@/auth'
+import { auth } from '@/auth' 
 import { DefaultTemp } from '@/components/DefaultTemp'
 import Navbar from '@/components/Navbar'
-import Link from 'next/link'
 import React from 'react'
 import { connectDB } from "@/utils/connect";
 import EditProfilePhoto from '@/components/mystore/EditProfilePhoto'
-import EditUserName from '@/components/mystore/EditUserName'
 import { Store } from '../../../models/storeModel'
+import EditStoreDetails from '@/components/mystore/EditStoreDetails'
+import Link from 'next/link';
 
 const page = async () => {
 
@@ -23,8 +23,7 @@ const page = async () => {
 
 
     try{
-        storeData = await Store.find({ownerEmail: email});  
-        console.log(storeData)    
+        storeData = await Store.find({ownerEmail: email});      
         themeColor = storeData[0].themeColor  
     } catch(err){
         console.log(err)
@@ -46,6 +45,12 @@ const page = async () => {
 
                     <div className='flex flex-row'>
                         <div className='w-2/4 h-full'>
+
+                            {   (JSON.stringify(storeData) === '{}') ? null :
+                                <h2 className='text-xl ml-6 mt-10 font-semibold text-sky-900/65'>
+                                    Welcome back {storeData[0].username} 👋
+                                </h2>
+                            }
 
                             <div className='flex p-8 space-x-4'>
 
@@ -71,19 +76,29 @@ const page = async () => {
                             <>
                             <EditProfilePhoto image={storeData[0]?.img}/>
 
-                            <EditUserName/>
+                            <EditStoreDetails />
+
                             </>
 
                         }
-                        
+                        <div className='h-24 w-full'>
+                        </div>                        
 
 
                         </div>
 
-                        <div className='flex w-2/4 h-screen items-start justify-center'>
+                        <div className='flex w-2/4 h-screen mt-10 items-start justify-center'>
                         {   (JSON.stringify(storeData) === '{}') ? null :
 
-                       null
+                            <DefaultTemp 
+                              themeColor={themeColor}
+                              profileImg={storeData[0].img} 
+                              username={storeData[0].username} 
+                              bio={storeData[0].bio}
+                              link={storeData[0].link}
+                              location={storeData[0].location}
+                              servicesData= {storeData[0].services}
+                             />
                         }
                         </div>
                     </div>
