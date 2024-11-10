@@ -12,7 +12,7 @@ const page = async () => {
 
     // GET LOGGED IN USERS EMAIL
     const session = await auth();
-    const email = session.user?.email;
+    const email = session?.user?.email;
  
     // CREATE DB CONNECTION AND FETCH USER DATA
     await connectDB();
@@ -48,7 +48,7 @@ const page = async () => {
 
                             {   (JSON.stringify(storeData) === '{}') ? null :
                                 <h2 className='text-xl ml-6 mt-10 font-semibold text-sky-900/65'>
-                                    Welcome back {storeData[0].username} 👋
+                                    Welcome back {storeData[0]?.username} 👋
                                 </h2>
                             }
 
@@ -76,7 +76,12 @@ const page = async () => {
                             <>
                             <EditProfilePhoto image={storeData[0]?.img}/>
 
-                            <EditStoreDetails />
+                            <EditStoreDetails
+                             username = {storeData[0]?.username}
+                             bio = {storeData[0]?.bio}
+                             location = {storeData[0]?.location}
+                             link = {storeData[0]?.link}
+                            />
 
                             </>
 

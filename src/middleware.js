@@ -9,7 +9,7 @@ export default async function middleware(req){
 
     const { nextUrl } = req;
     
-    /*
+    
     const authCookie = req.cookies.get("authjs.session-token");
 
     console.log(nextUrl.pathname)
@@ -42,7 +42,7 @@ export default async function middleware(req){
         console.log(error)
     }
 
-    */
+    
     
 
 }

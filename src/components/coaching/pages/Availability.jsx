@@ -18,6 +18,16 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { colors } from '@/utils/colors';
+
+const timeSlots = [
+    {start: "01:00 AM", end: "03:00 AM"},
+    {start: "01:00 AM", end: "03:00 AM"},
+    {start: "01:00 AM", end: "03:00 AM"},
+    {start: "01:00 AM", end: "03:00 AM"},
+    {start: "01:00 AM", end: "03:00 AM"},
+    {start: "01:00 AM", end: "03:00 AM"},
+
+  ]
  
 const Availability = () => {
     const [date, setDate] = useState(new Date());
@@ -29,6 +39,10 @@ const Availability = () => {
         av_break_before: '',
         av_break_after: ''
     })
+
+    // INDEX VARIABLE FOR PREVIEW
+    const [index, setIndex] = useState(0)
+
     console.log(data);
     const ukTimeZones = [
         {
@@ -59,6 +73,8 @@ const Availability = () => {
      const tb_style = formData.tb_style || undefined;
      const tb_title = formData.tb_title || undefined;
      const tb_subtitle = formData.tb_subtitle || undefined;
+     const tb_desc = formData.tb_desc || undefined;
+
      const tb_buttonCTA = formData.tb_button || undefined;
      const tb_price = formData.tb_price || undefined;
      const tb_discount = formData.tb_discount || undefined;
@@ -284,6 +300,7 @@ const Availability = () => {
                 <input type="hidden" name="tb_style" value={tb_style} />
                 <input type="hidden" name="tb_title" value={tb_title} />
                 <input type="hidden" name="tb_subtitle" value={tb_subtitle} />
+                <input type="hidden" name="tb_desc" value={tb_desc} />
                 <input type="hidden" name="tb_buttonCTA" value={tb_buttonCTA} />
                 <input type="hidden" name="tb_price" value={tb_price} />
                 <input type="hidden" name="tb_discount" value={tb_discount} />
@@ -300,7 +317,7 @@ const Availability = () => {
 
         <div className='flex w-2/4 items-start justify-center'>
 
-            <div className="flex flex-col sticky top-10 overflow-y-scroll justify-center items-center bg-[#fefefe] border-8 border-gray-800 rounded-[40px] w-[18rem] h-[35rem]">
+            <div className="flex flex-col sticky top-10 overflow-y-scroll items-center bg-[#fefefe] border-8 border-gray-800 rounded-[40px] w-[18rem] h-[35rem]">
         
                 {/* TOP NOTCH UPPER MOBIILE LINE */}
                 <div className='flex sticky top-0 bg-gray-800 w-36 min-h-5 rounded-b-xl items-center justify-center space-x-3'>
@@ -310,13 +327,37 @@ const Availability = () => {
                     </div>
                 </div>  
 
-                <div className='flex h-full w-full justify-center items-center'>
+                <div className='flex h-full w-full mt-8 justify-center items-center'>
                     <Calendar
                         mode="single"
                         selected={date}
                         onSelect={setDate}
                         className="rounded-md border"
                     />  
+                </div>
+
+                <div className='grid grid-cols-3 gap-2 p-3'>
+                    {   
+                        timeSlots.map((slot, index_) =>
+           
+                            <div 
+                                onClick={()=> setIndex(index_)}
+                                className={`flex items-center text-center justify-center rounded-md hover:opacity-60 ${(index >= 0 &&  index===index_) ?"text-white bg-sky-500/75" : "bg-gray-200/75" } bg-gray-200/75 text-[8px] py-2 text-gray-500`}>
+                                    {`${slot.start}-${slot.end}`}
+                            </div>
+                          
+                      
+                        )    
+                    }
+                </div>
+
+                <button type='submit' className={`bg-sky-500/75 mt-6 active:opacity-60 hover:opacity-60 py-2 w-[90%] rounded focus:outline-none focus:shadow-outline`}>
+                    <h4 className='text-sm font-semibold text-white'>Book Appointment</h4>
+                    
+                </button>
+
+                <div className='p-8'>
+
                 </div>
                 
             </div>

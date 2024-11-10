@@ -23,6 +23,8 @@ export async function submitCoachingData(formData) {
     const tb_style = formData.get('tb_style');
     const tb_title = formData.get('tb_title');
     const tb_subtitle = formData.get('tb_subtitle');
+    const tb_desc = formData.get('tb_desc');
+
     const tb_buttonCTA = formData.get('tb_buttonCTA');
     const tb_price = formData.get('tb_price');
     const tb_discount = formData.get('tb_discount');
@@ -100,6 +102,7 @@ export async function submitCoachingData(formData) {
                     img: tb_img,
                     title: tb_title,
                     subtitle: tb_subtitle,
+                    description: tb_desc,
                     buttonCTA: tb_buttonCTA ,
                     price : tb_price,
                     discount : tb_discount
@@ -172,7 +175,8 @@ export async function submitCoachingData(formData) {
                         }
                     ]
 
-                }
+                },
+                reviews : []
             
         }           
     }});

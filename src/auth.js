@@ -85,7 +85,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
             await Store.create({
               ownerEmail: email,
-              socialLinks: {}
+              socialLinks: {},
+              services : [
+              ]
       
           })
           }
