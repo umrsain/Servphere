@@ -2,7 +2,6 @@ import Link from 'next/link';
 
 import Head from 'next/head';
 import React from 'react'
-import img from '../components/servphere-logov2.png';
 import Image from 'next/image';
 import { auth } from '@/auth';
 import { colors } from '@/utils/colors';
@@ -15,14 +14,15 @@ import {
 import LoginPopover from '@/components/login/LoginPopover';
 import SignupPopover from '@/components/register/SignupPopover';
 import { redirect } from 'next/navigation';
-import { connectDB } from '@/utils/connect';
-import { Store } from '../../models/storeModel';
-import { User } from '../../models/userModel';
+
 
 import  p3  from "../../public/images/p3.jpg";
 import  p6  from "../../public/images/p6.jpg";
 import  p5  from "../../public/images/p5.jpg";
 import  p1  from "../../public/images/p1.jpg";
+import { db } from '@/db';
+import { sql } from 'drizzle-orm';
+import { users } from '@/db/schema/users';
 
 
   
@@ -33,12 +33,12 @@ export default async function Home() {
     const email = session?.user?.email;
   
     if (session?.user) {
-        await connectDB();
-        let onBoardingCompleted = await User.find({email: email},{_id:0,
-            onBoardingCompleted: 1});
-
-        if (onBoardingCompleted[0]?.onBoardingCompleted) redirect("/mystore")
+       
+        let response = await db.execute(sql`select ${users.onBoardingCompleted} from ${users} where ${users.id}=${session?.user?.id}`)
+        
+        if (response?.rows[0]?.onBoardingCompleted) redirect("/mystore")
         else redirect("/onboarding")
+
 
         //redirect("/mystore");
 

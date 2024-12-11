@@ -30,7 +30,7 @@ export default function AvailabilityDetailsPage() {
 
                 <div className='grid grid-cols-2 gap-3'>
                     {timeSlots.map((elm, index) =>
-                        <div onClick={()=> setSlotIndex(index)} className='flex items-center text-center justify-center rounded-md hover:opacity-60 bg-gray-200/75 h-10 w-28 text-[9px] text-gray-500 '>
+                        <div key={index} onClick={()=> setSlotIndex(index)} className='flex items-center text-center justify-center rounded-md hover:opacity-60 bg-gray-200/75 h-10 w-28 text-[9px] text-gray-500 '>
                             {elm}
                         </div>
                     )}

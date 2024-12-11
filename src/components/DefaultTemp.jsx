@@ -64,8 +64,8 @@ export const DefaultTemp = ({themeColor, profileImg, username, bio, link, locati
 
             <div className='flex flex-col w-full space-y-2'>
 
-              {servicesData.map((elm,index) =>
-                <div className='flex justify-between shadow-sm p-3'>
+              {servicesData?.map((elm,index) =>
+                <div key={index} className='flex justify-between shadow-sm p-3'>
 
                   <div className='w-[65%]'>
                     <h4 className='text-[11px] text-gray-600 font-semibold'>

@@ -15,9 +15,11 @@ import { FaTiktok } from "react-icons/fa6";
 import { toast } from 'sonner';
 import { AddSocials } from '@/actions/AddSocials';
 import { colors } from '@/utils/colors';
+import { useSelector } from 'react-redux';
 
 
-export default function SocialsDialogMenu() {
+export default function SocialsDialogMenu({store_id}) {
+
 
   return (
     <Dialog>
@@ -34,7 +36,7 @@ export default function SocialsDialogMenu() {
         <DialogHeader>
           <DialogTitle>Enter your Social links</DialogTitle>
           <DialogDescription>
-            Make changes to your Social links here. Click save when you're done.
+            Make changes to your Social links here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
 
@@ -42,7 +44,7 @@ export default function SocialsDialogMenu() {
             const toastID = toast.loading("Adding Socials");
 
             try {
-              //await AddSocials(formData);
+              await AddSocials(formData);
               toast.success("Changes Successful", {
                 id: toastID
                });
@@ -58,11 +60,6 @@ export default function SocialsDialogMenu() {
 
           <div className="space-y-4">
             
-            <div>
-                <label className='text-gray-500 text-xs'>Bio</label>
-                <input required name='bio' placeholder='A short description of yourself' type='text' className='focus:outline-none text-xs text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
-            </div>
-
             <div className="space-y-2">
 
               <div className="">
@@ -86,6 +83,7 @@ export default function SocialsDialogMenu() {
                 </div>
               </div>
 
+              <input type='hidden' name='store_id' value={store_id}/>
             </div>
                     
             <DialogFooter>

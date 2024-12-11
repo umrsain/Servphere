@@ -10,10 +10,11 @@ import { submitDigitalData } from '@/actions/submitDigitalData';
 import { toast } from 'sonner';
 import { colors } from '@/utils/colors';
 
-const Thumbnail = () => {
+const Thumbnail = ({store_id}) => {
 
     const curSelectedPageIndex = useSelector((store) => store.digital.curSelectedPageIndex);
     const formData = useSelector((store) => store.digital.formData);
+
 
     console.log(formData)
 
@@ -34,13 +35,6 @@ const Thumbnail = () => {
     const [myStyle, setMyStyle] = useState('Button');
 
     const dispatch = useDispatch()
-
-    async function action(formData) {
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        dispatch(updateFormData(object));
-        dispatch(setCurSelectedPageIndex(curSelectedPageIndex+1));
-    }
 
     console.log(curSelectedPageIndex)
 
@@ -182,11 +176,10 @@ const Thumbnail = () => {
 
                 </div>
 
+                <input type='hidden' name='store_id' value={store_id}/>
+
             </div>
-            
-
         
-
         </div>
 
     </form>

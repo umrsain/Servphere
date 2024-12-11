@@ -10,9 +10,10 @@ import {
     TableRow,
   } from "@/components/ui/table"
   
-
-function page() {
-  return (
+ 
+export default async function Page() { 
+    
+    return (
     <div className='flex h-screen bg-white'>
         <Navbar/>
 
@@ -79,5 +80,3 @@ function page() {
     </div>
   )
 }
-
-export default page

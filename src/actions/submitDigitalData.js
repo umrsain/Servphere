@@ -1,17 +1,12 @@
 'use server'
 
-import { auth } from '@/auth';
-import { User } from "../../models/userModel";
-import { connectDB } from "../utils/connect";
-import { Store } from "../../models/storeModel";
-import mongoose from 'mongoose';
+import { services } from '@/db/schema/services';
+import { db } from '@/db';
 
 export async function submitDigitalData(formData) {
 
     // GET AUTHENTICATED USERS EMAIL 
-    
-    const session = await auth();
-    const email = session.user?.email;
+
 
     // THUMNAIL PAGE DATA
 
@@ -25,35 +20,22 @@ export async function submitDigitalData(formData) {
     const tb_discount = formData.get('tb_discount');
     const tb_product = formData.get('tb_product');
 
+    const store_id = formData.get("store_id");
+
     
-       // CONNECT DB
-       await connectDB();
-     
-       await Store.updateOne({ownerEmail: email},{
-        $push: {
-           services : {
-                _id: new mongoose.Types.ObjectId(),
-                label : "digital",
-                thumbnail: {
-                    img: tb_img,
-                    title: tb_title,
-                    subtitle: tb_subtitle,
-                    description: tb_desc,
-                    features : tb_features,
-                    buttonCTA: tb_buttonCTA ,
-                    price : tb_price,
-                    discount :tb_discount,
-                    product : tb_product
-                },
-                reviews : []
-    
-           }           
-       }});
-
-       
-
-
-
-
-
+    await db.insert(services).values({
+        store_id : store_id,
+        label : "digital",
+        thumbnail: {
+            img: tb_img,
+            title: tb_title,
+            subtitle: tb_subtitle,
+            description: tb_desc,
+            features : tb_features,
+            buttonCTA: tb_buttonCTA ,
+            price : tb_price,
+            discount :tb_discount,
+            product : tb_product
+        },
+    })
 }

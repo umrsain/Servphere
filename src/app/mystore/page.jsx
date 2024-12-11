@@ -2,29 +2,36 @@ import { auth } from '@/auth'
 import { DefaultTemp } from '@/components/DefaultTemp'
 import Navbar from '@/components/Navbar'
 import React from 'react'
-import { connectDB } from "@/utils/connect";
 import EditProfilePhoto from '@/components/mystore/EditProfilePhoto'
-import { Store } from '../../../models/storeModel'
 import EditStoreDetails from '@/components/mystore/EditStoreDetails'
 import Link from 'next/link';
-
-const page = async () => {
+import { db } from '@/db';
+import { sql } from 'drizzle-orm';
+import { stores } from '@/db/schema/stores';
+import { services } from '@/db/schema/services';
+ 
+export default async function Page() { 
 
     // GET LOGGED IN USERS EMAIL
     const session = await auth();
     const email = session?.user?.email;
- 
-    // CREATE DB CONNECTION AND FETCH USER DATA
-    await connectDB();
-
 
     let storeData;
     let themeColor;
+    let servicesData;
 
 
     try{
-        storeData = await Store.find({ownerEmail: email});      
-        themeColor = storeData[0].themeColor  
+        //
+        storeData = await db.execute(sql`select * from ${stores} where ${stores.userId}=${session?.user?.id}`);
+        storeData = storeData.rows;
+
+        
+        servicesData = await db.execute(sql`select * from ${services} where ${services.store_id}=${storeData[0]?.id}`);
+        servicesData = servicesData.rows;
+
+        //themeColor = storeData[0].themeColor  
+        themeColor = '#FFFFFF'
     } catch(err){
         console.log(err)
     }
@@ -102,7 +109,7 @@ const page = async () => {
                               bio={storeData[0].bio}
                               link={storeData[0].link}
                               location={storeData[0].location}
-                              servicesData= {storeData[0].services}
+                              servicesData= {servicesData}
                              />
                         }
                         </div>
@@ -113,7 +120,4 @@ const page = async () => {
     
         </div>
   )
-} 
-
-export default page
-
+}

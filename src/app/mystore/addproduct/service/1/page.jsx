@@ -1,27 +1,47 @@
 "use client"
-import { createServiceAction } from '@/actions/createServiceAction';
 import Navbar from '@/components/Navbar';
 import Availability from '@/components/coaching/pages/Availability';
 import Checkout from '@/components/coaching/pages/Checkout';
 import Thumbnail from '@/components/coaching/pages/Thumbnail';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurSelectedPageIndex, updateFormData } from '@/redux/slices/thumbnailSlice';
 import { colors } from '@/utils/colors';
  
+ 
 
-
-const page = () => {
+export default function Page() { 
   
   const dispatch = useDispatch()
   const pageOptions = ['Thumbnail', 'Availability' ];
   const curSelectedPageIndex = useSelector((store) => store.thumbnail.curSelectedPageIndex);
 
+
+  const [store_id, setStoreId] = useState('')
+
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      let response = await fetch('/api/get-store-id/', {
+        method: 'POST'
+      })
+      response = await response.json();
+
+      setStoreId(response)
+
+    }
+  
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [])
+
   return (
     <div className='flex bg-white w-full h-full'>
-            
+             
     <Navbar/>
                  
     <div className='w-full h-full bg-white mt-5 mb-20'>
@@ -34,7 +54,7 @@ const page = () => {
             <div className='flex p-8 space-x-4'>
 
                 {pageOptions.map((option, index) => 
-                    <>
+                    <div key={index}>
                     {curSelectedPageIndex === index ? 
 
                      <div onClick={()=>dispatch(setCurSelectedPageIndex(index))} key={option} className='border-2 border-red-200 text-red-300 rounded-2xl px-4 py-1'>
@@ -55,7 +75,7 @@ const page = () => {
                     
                 }
                      
-                    </>
+                    </div>
                 )}
 
             </div>
@@ -64,7 +84,7 @@ const page = () => {
             
                 { curSelectedPageIndex == 0 && <Thumbnail/>}
 
-                { curSelectedPageIndex == 1 && <Availability/>}
+                { curSelectedPageIndex == 1 && <Availability store_id={store_id}/>}
 
 
          
@@ -77,5 +97,3 @@ const page = () => {
 </div>
   )
 }
-
-export default page

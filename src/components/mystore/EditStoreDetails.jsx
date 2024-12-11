@@ -8,7 +8,7 @@ export default function EditStoreDetails({username,bio,location,link}) {
 
   return (
     <form action={async (formData) => {
-        const toastID = toast.loading("Changing Username");
+        const toastID = toast.loading("Changing Profile Details");
 
         try {
           await editStoreDetailsAction(formData);

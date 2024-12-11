@@ -61,7 +61,7 @@ import {
                 </Text>
   
                 <Text style={{...paragraph, paddingLeft: "3px" }}>
-                    Verify your email address, if you haven’t already. It helps us keep your account secure if you forget your password and provide better support.                
+                    Verify your email address, if you haven&apos;t already. It helps us keep your account secure if you forget your password and provide better support.                
                 </Text>
   
                 <Text style={{ ...paragraph, fontWeight: "600",fontSize: "16px" }}>
@@ -69,7 +69,7 @@ import {
                 </Text>
   
                 <Text style={{...paragraph, paddingLeft: "3px" }}>
-                    Review all the information you've added and finalize your profile. A complete and polished profile will help you stand out.                
+                    Review all the information you&apos;ve added and finalize your profile. A complete and polished profile will help you stand out.                
                 </Text>
   
                 <Text style={{ ...paragraph, fontWeight: "600",fontSize: "16px" }}>

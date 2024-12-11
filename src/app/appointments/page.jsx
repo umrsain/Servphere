@@ -1,19 +1,19 @@
 import React from 'react'
-import { Booking } from '../../../models/bookingModel';
 import { auth } from '@/auth';
-import { connectDB } from '@/utils/connect';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Clock, User } from "lucide-react"
+import { Clock, User } from "lucide-react"
+import { db } from '@/db';
+import { bookings } from '@/db/schema/bookings';
+import { and, gt, lt, or, sql } from 'drizzle-orm';
+import { services } from '@/db/schema/services';
 
-export default async function page() {
+export default async function Page() {
 
     // GET LOGGED IN USERS EMAIL
     const session = await auth();
-    const email = session.user?.email;
+    const email = session?.user?.email;
 
     // GET CURRENT TIME DETAILS
 
@@ -26,7 +26,7 @@ export default async function page() {
 
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-
+ /*
     // CREATE DB CONNECTION AND FETCH USER DATA
     await connectDB();
 
@@ -46,9 +46,22 @@ export default async function page() {
         });   
 
         console.log(filteredAppointments)
+
+        */
         
-         
-   
+
+        let filteredAppointments = await db.execute(sql`SELECT
+        service.thumbnail, booking.date_of_booking, booking."startTime",booking."endTime", client.name, client.email
+        FROM client
+        JOIN booking
+          ON client.id = booking.client_id
+          JOIN service
+            ON service.id = booking.service_id
+            
+            WHERE booking.date_of_booking > now() OR (booking.date_of_booking = now() AND booking."startTime" > ${currentTimeString})`)
+        
+        filteredAppointments = filteredAppointments.rows;
+
     return (
     <div className='flex h-screen bg-white'>
         <Navbar/>
@@ -70,20 +83,20 @@ export default async function page() {
                     <Card>
                       <CardContent className="flex items-center justify-between p-4">
                         <div>
-                          <h3 className="font-semibold">{appointment.serviceName}</h3>
-                          <p className="text-sm text-gray-500">{appointment.date.toISOString().split('T')[0]}</p>
+                          <h3 className="font-semibold">{appointment?.thumbnail?.title}</h3>
+                          <p className="text-sm text-gray-500">{appointment?.date_of_booking}</p>
                           <div className="flex items-center mt-2">
                             <Clock className="w-4 h-4 mr-1" />
                             <span className="text-sm">
-                              {appointment.startTime} - {appointment.endTime}
+                              {appointment?.startTime} - {appointment?.endTime}
                             </span>
                           </div>
                           <div className="flex items-center mt-1">
                             <User className="w-4 h-4 mr-1" />
-                            <span className="text-sm">{appointment.clientName}</span>
+                            <span className="text-sm">{appointment?.name}</span>
                           </div>
                         </div>
-                        <Badge variant="secondary">{appointment.clientEmail}</Badge>
+                        <Badge variant="secondary">{appointment?.email}</Badge>
                       </CardContent>
                     </Card>
                   </li>

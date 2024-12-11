@@ -12,7 +12,6 @@ import {
   } from "@/components/ui/dialog";
 
   import { toast } from 'sonner';
-import Feedback from './surveyComponents/Feedback';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { AddFeedback } from '@/actions/onboarding/AddFeedback'
 
@@ -32,7 +31,6 @@ import { FaQuestion } from "react-icons/fa";
 import { colors } from '@/utils/colors';
 import { AddNiches } from '@/actions/onboarding/AddNiches';
 import Link from 'next/link';
-import { incrementStep } from '@/actions/onboarding/incrementStep';
 
 const niches = [
     {
@@ -132,7 +130,7 @@ export default function WizardSurvey() {
 
       const handleClose = async () => {
         setOpenDialog(false)
-        await incrementStep()
+    
       }
 
       const handleGoNextPage = () => {

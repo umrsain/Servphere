@@ -1,6 +1,4 @@
 import React from 'react'
-import { connectDB } from "@/utils/connect";
-import { User } from "../../../models/userModel";
 import { auth } from '@/auth';
 import SocialsDialogMenu from '@/components/Home/SocialsDialogMenu';
 import ProfileDialogMenu from '@/components/Home/ProfileDialogMenu';
@@ -9,40 +7,59 @@ import Link from 'next/link';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { colors } from '@/utils/colors';
 import WizardSurvey from '@/components/Home/WizardSurvey';
+import { db } from '@/db';
+import { users } from '@/db/schema/users';
+import { sql } from 'drizzle-orm' 
+import { stores } from '@/db/schema/stores';
 
-export default async function page() {
+export default async function Page() {
 
     // GET LOGGED IN USERS EMAIL
     const session = await auth();
-    const email = session.user?.email;
 
-    // CREATE DB CONNECTION AND FETCH USER DATA
-    await connectDB();
-
-    //console.log(email);
+    // FETCH USER DATA AND STORE INFO
 
     let userData;
+    let store_id;
 
     try{
-        userData = await User.find({email: email});        
+        // USER DATA
+        userData = await db.execute(sql`select * from ${users} where ${users.id} = ${session?.user?.id}`);  
+        userData = userData.rows; 
+
+        // STORE DATA
+
+        store_id = await db.execute(sql`select ${stores.id} from ${stores} where ${stores.userId} = ${session?.user?.id}`);  
+        store_id = store_id?.rows[0]?.id;
+
+        // IF STORE DONT EXIST THEN CREATE IT AND GET STORE ID
+        if (!store_id){
+            store_id = crypto.randomUUID();
+
+            await db.insert(stores).values({
+                id : store_id,
+                ownerEmail: session?.user?.email,
+                userId: session?.user?.id,
+            })
+        }
+        
     } catch(err){
         console.log(err)
     }
 
-    //console.log(userData);
 
     // DATA STRUCTURE TO STORE ALL CARDS INFORMATION
     const CardsInfo = [
         {
           title: 'Add Your Profile Details',
           desc: 'Personalize your store by adding a profile photo, username and a bio etc.',
-          CTA : <ProfileDialogMenu stepNumber={userData?.onBoardingStep}/>,
+          CTA : <ProfileDialogMenu store_id={store_id}/>,
           done : false
         }, 
         {
           title : 'Add Your Socials',
           desc : 'Add links to your socials so you can connect to your audience from multiple platforms',
-          CTA : <SocialsDialogMenu/>,
+          CTA : <SocialsDialogMenu store_id={store_id}/>,
           done : false
     
         },

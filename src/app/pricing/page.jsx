@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { colors } from "@/utils/colors"
 import { Check } from "lucide-react"
 
-export default async function Component() {
+export default async function Page() { 
 
     const session = await auth();
     const email = session.user?.email;

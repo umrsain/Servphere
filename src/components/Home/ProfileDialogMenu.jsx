@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -14,7 +14,8 @@ import { UploadDropzone } from '@uploadthing/react';
 import { colors } from '@/utils/colors';
 import { AddProfileInfo } from '@/actions/AddProfileInfo';
 
-export default function ProfileDialogMenu({stepNumber}) {
+
+export default function ProfileDialogMenu({store_id}) {
 
   const [profileImg, setProfileImg] = useState('');
 
@@ -33,7 +34,7 @@ export default function ProfileDialogMenu({stepNumber}) {
         <DialogHeader>
           <DialogTitle>Upload Profile Details</DialogTitle>
           <DialogDescription>
-            Add your profile details here. Click save when you're done.
+            Add your profile details here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
 
@@ -42,6 +43,7 @@ export default function ProfileDialogMenu({stepNumber}) {
 
             try {
               await AddProfileInfo(formData);
+
               toast.success("Changes Successful", {
                 id: toastID
               });
@@ -69,7 +71,6 @@ export default function ProfileDialogMenu({stepNumber}) {
                       endpoint={"imageUploader"}
                       onClientUploadComplete={(res) => {
                       // Do something with the response
-                      console.log("Files: ", res[0].url);
                       setProfileImg(res[0].url);
                       alert("Upload Completed");
                       }}
@@ -90,7 +91,15 @@ export default function ProfileDialogMenu({stepNumber}) {
                   <input required name='location' placeholder='Enter new location' type='text' className='focus:outline-none text-xs text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
               </div>
 
+              <div>
+                  <label className='text-gray-500 text-xs'>Link</label>
+                  <input required name='link' placeholder='Enter new link' type='text' className='focus:outline-none text-xs text-gray-500 w-full py-1.5 pl-2 rounded-sm font-regular bg-sky-50/75 border-0'/>
+              </div>
+
               <input type='hidden' name='profileImg' value={profileImg}/>
+
+              <input type='hidden' name='store_id' value={store_id}/>
+
               
             <DialogFooter>
 

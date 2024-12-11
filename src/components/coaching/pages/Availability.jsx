@@ -29,7 +29,7 @@ const timeSlots = [
 
   ]
  
-const Availability = () => {
+const Availability = ({store_id}) => {
     const [date, setDate] = useState(new Date());
     const availabilityData = useState({});
     const formData = useSelector((store) => store.thumbnail.formData);
@@ -39,7 +39,7 @@ const Availability = () => {
         av_break_before: '',
         av_break_after: ''
     })
-
+ 
     // INDEX VARIABLE FOR PREVIEW
     const [index, setIndex] = useState(0)
 
@@ -133,8 +133,8 @@ const Availability = () => {
                                     <SelectContent>
                                         <SelectGroup>
                                         <SelectLabel>Timezone</SelectLabel>
-                                            {ukTimeZones.map((elm) =>
-                                                <SelectItem value={elm.tz}>{elm.tz}</SelectItem>
+                                            {ukTimeZones.map((elm, index) =>
+                                                <SelectItem key={index} value={elm.tz}>{elm.tz}</SelectItem>
                                             )}
                         
                                         </SelectGroup>
@@ -184,8 +184,8 @@ const Availability = () => {
                             {/* CARD LIST FOR EACH DAY OF THE WEEK */}
                             <div className='w-full space-y-4'>
 
-                                {daysOfWeek.map((day) =>
-                                    <div>
+                                {daysOfWeek.map((day, index) =>
+                                    <div key={index}>
                                         <div className='flex w-full'>
 
                                             <button className='bg-sky-500/75 hover:bg-sky-300 py-2 w-1/4 rounded focus:outline-none focus:shadow-outline'>
@@ -305,6 +305,8 @@ const Availability = () => {
                 <input type="hidden" name="tb_price" value={tb_price} />
                 <input type="hidden" name="tb_discount" value={tb_discount} />
 
+                <input type='hidden' name='store_id' value={store_id}/>
+
             </div>
 
                 </div>
@@ -340,7 +342,8 @@ const Availability = () => {
                     {   
                         timeSlots.map((slot, index_) =>
            
-                            <div 
+                            <div
+                                key={index_} 
                                 onClick={()=> setIndex(index_)}
                                 className={`flex items-center text-center justify-center rounded-md hover:opacity-60 ${(index >= 0 &&  index===index_) ?"text-white bg-sky-500/75" : "bg-gray-200/75" } bg-gray-200/75 text-[8px] py-2 text-gray-500`}>
                                     {`${slot.start}-${slot.end}`}

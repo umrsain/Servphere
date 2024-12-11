@@ -1,5 +1,4 @@
 "use client"
-import { loginHandler } from '@/actions/loginHandler';
 import { colors } from '@/utils/colors';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';

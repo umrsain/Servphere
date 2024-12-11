@@ -42,7 +42,7 @@ export default function EditProfilePhoto({image}) {
                     <DialogHeader>
                     <DialogTitle>Edit Profile Picture</DialogTitle>
                     <DialogDescription>
-                        Make changes to your profile Picture here. Click save when you're done.
+                        Make changes to your profile Picture here. Click save when you&apos;re done.
                     </DialogDescription>
                     </DialogHeader>
 

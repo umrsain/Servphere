@@ -28,7 +28,6 @@ export default function LoginPopover() {
 
     <DialogContent className="sm:max-w-[425px]">
         
-          <LoginForm/>
 
           <div className='flex flex-col h-full items-center justify-center space-y-3 '>
 

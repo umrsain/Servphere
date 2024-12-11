@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 
-const login = async() => {
+const Login = async() => {
 
   const session = await auth();
   
@@ -49,4 +49,4 @@ const login = async() => {
   )
 }
 
-export default login
+export default Login

@@ -50,7 +50,7 @@ export const HomePageCard = ({index, title, desc, btnCTA, DialogTitle, }) => {
             <DialogHeader>
               <DialogTitle>Upload Profile Picture</DialogTitle>
               <DialogDescription>
-                Make changes to your profile Picture here. Click save when you're done.
+                Make changes to your profile Picture here. Click save when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
             <div className="">

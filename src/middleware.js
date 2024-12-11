@@ -5,6 +5,8 @@ import { decode } from "@auth/core/jwt";
 
 
 export default async function middleware(req){
+
+    /*
     console.log("TRACKING");
 
     const { nextUrl } = req;
@@ -23,14 +25,6 @@ export default async function middleware(req){
         return Response.redirect(new URL('/', nextUrl));
     }
    
-
-     console.log(
-        await decode({
-            token: authCookie?.value,
-            salt : authCookie?.name,
-            secret : process.env.AUTH_SECRET
-        })
-    )
     
     try{
         analytics.track("page-view",{
@@ -43,6 +37,7 @@ export default async function middleware(req){
     }
 
     
+    */
     
 
 }

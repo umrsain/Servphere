@@ -4,7 +4,7 @@ import { getDate } from '@/utils';
 import  {analytics}  from '@/utils/analytics';
 import React from 'react'
 
-export default async function page() {
+export default async function Page() {
 
   // VIEW DATA FOR THE PAST X NUMBER OF DAYS
   const TRACKING_DAYS = 7;

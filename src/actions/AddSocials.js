@@ -1,46 +1,33 @@
 'use server'
 
 import { auth } from '@/auth';
-import { User } from "../../models/userModel";
-import { Store } from "../../models/storeModel";
-import { connectDB } from "../utils/connect";
 import { revalidatePath } from 'next/cache';
+
+import { db } from '@/db';
+import { and, eq, sql } from 'drizzle-orm';
+import { stores } from '@/db/schema/stores';
+import { users } from '@/db/schema/users';
 
 export async function AddSocials(formData) {
     const session = await auth();
-    const email = session.user?.email;
     const insta = formData.get("insta");
     const tiktok = formData.get("tiktok");
     const twitter = formData.get("twitter");
+    const store_id = formData.get("store_id");
 
-    console.log(email);
-    console.log(insta);
-    console.log(tiktok);
-    console.log(twitter);
-    
-    const bio = formData.get("bio");
+    await db.update(stores)
+    .set({ 
+      socials:{
+         insta: insta,
+         tiktok : tiktok,
+         twitter : twitter,
+      }
+    })
+    .where(and( eq(stores.userId, session?.user?.id), eq(stores.id, store_id)));
 
-
-     // CONNECT DB
-     await connectDB();
- 
-     await Store.updateOne({ownerEmail: email},{
-        $set : {
-                ownerEmail: email,
-                socialLinks: {
-                    insta: insta,
-                    tiktok : tiktok,
-                    twitter : twitter,
-                },
-                bio: bio     
-        }
-     });
-
-     await User.updateOne({email: email},{
-        $set : {        
-          onBoardingStep: 2
-        }
-     });
+    await db.update(users)
+    .set({ onBoardingStep: 2 })
+    .where(eq(users.id, session?.user?.id));
 
      revalidatePath('/mystore')
 

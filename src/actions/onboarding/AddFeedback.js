@@ -1,8 +1,10 @@
 'use server'
 
 import { auth } from '@/auth';
-import { User } from "../../../models/userModel";
-import { connectDB } from "../../utils/connect";
+import { db } from '@/db';
+import { users } from '@/db/schema/users';
+import { eq, sql } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 
 export async function AddFeedback(formData) {
     const session = await auth();
@@ -11,16 +13,18 @@ export async function AddFeedback(formData) {
     const selectedVal = formData.get("selectedVal")
     const comment = formData.get("comment")
 
-       // CONNECT DB
-       await connectDB();
+    await db.update(users)
+    .set({ 
+      feedback: {
+        option : selectedVal,
+        comment: comment
+      },
+      onBoardingStep: 3,
+      onBoardingCompleted: true
+    })
+    .where(eq(users.id, session?.user?.id));
 
-       await User.updateOne({email: email},{    
-           $set : {
-               feedback: {
-                 option : selectedVal,
-                 comment: comment
-               }
-           } 
-        })
+
+     revalidatePath('/mystore')
 
 }

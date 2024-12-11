@@ -3,16 +3,36 @@ import Navbar from '@/components/Navbar';
 import Checkout from '@/components/digital/pages/Checkout';
 import Thumbnail from '@/components/digital/pages/Thumbnail';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurSelectedPageIndex, updateFormData } from '@/redux/slices/digitalSlice';
  
 
-const page = () => {
+export default function Page() { 
   
   const dispatch = useDispatch()
   const pageOptions = ['Thumbnail'];
   const curSelectedPageIndex = useSelector((store) => store.digital.curSelectedPageIndex);
+
+  const [store_id, setStoreId] = useState('')
+
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      let response = await fetch('/api/get-store-id/', {
+        method: 'POST'
+      })
+      response = await response.json();
+
+      setStoreId(response)
+
+    }
+  
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [])
 
   return (
     <div className='flex bg-white w-full h-full'>
@@ -55,7 +75,7 @@ const page = () => {
 
             </div>
                         
-                { curSelectedPageIndex == 0 && <Thumbnail/>}
+                { curSelectedPageIndex == 0 && <Thumbnail store_id={store_id}/>}
 
 
         </div>
@@ -65,5 +85,3 @@ const page = () => {
 </div>
   )
 }
-
-export default page
