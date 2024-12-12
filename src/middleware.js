@@ -6,7 +6,7 @@ import { decode } from "@auth/core/jwt";
 
 export default async function middleware(req){
 
-    /*
+  
     console.log("TRACKING");
 
     const { nextUrl } = req;
@@ -24,7 +24,8 @@ export default async function middleware(req){
         console.log("Xnot logged in")
         return Response.redirect(new URL('/', nextUrl));
     }
-   
+    
+     /*
     
     try{
         analytics.track("page-view",{

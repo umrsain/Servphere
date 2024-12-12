@@ -17,6 +17,7 @@ import { colors } from '@/utils/colors';
 
 export default function EditProfilePhoto({image}) {
     const [img, setImg] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
   return (
     <div className='pl-8 space-y-2'>
 
@@ -47,21 +48,25 @@ export default function EditProfilePhoto({image}) {
                     </DialogHeader>
 
                     <form action={async (formData) => {
+
+                        setIsLoading(true)
+
                         const toastID = toast.loading("Updating Profile photo");
 
                         try {
-                        await ChangeProfilePhoto(formData);
-                        toast.success("Changes Successful", {
-                            id: toastID
-                        });
+                            await ChangeProfilePhoto(formData);
+                            toast.success("Changes Successful", {
+                                id: toastID
+                            });
 
 
                         } catch(error){
-                        toast.error(String(error), {
-                            id: toastID
-                        })
-
+                            toast.error(String(error), {
+                                id: toastID
+                            })
                         }
+
+                        setIsLoading(false)
                     
                     }}>
                     <div className="">
@@ -83,7 +88,7 @@ export default function EditProfilePhoto({image}) {
                         
                         <DialogFooter>
 
-                        <button type='submit' className={`mt-3 bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 text-sm text-white py-2 px-12 rounded focus:outline-none focus:shadow-outline`}>
+                        <button type='submit' disabled={isLoading} className={`mt-3 bg-[${colors.airbnb_red}] hover:opacity-60 active:opacity-60 text-sm text-white py-2 px-12 rounded focus:outline-none focus:shadow-outline`}>
                             Save changes
                         </button>
 
